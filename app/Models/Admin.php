@@ -12,23 +12,4 @@ class Admin extends User
             $builder->where('role', 'ADMIN');
         });
     }
-    //methods
-    public function createDoctor()
-    {
-
-    }
-    public function createSecretary()
-    {
-
-    }
-    public function createPatient()
-    {
-
-    }
-    public function viewGlobalStats()
-    {
-
-    }
-
-
 }
