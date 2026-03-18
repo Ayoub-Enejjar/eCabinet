@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Secretaire extends User
+{
+    protected static function booted()
+    {
+        static::addGlobalScope('SECRETARY', function ($builder) {
+            $builder->where('role', 'SECRETARY');
+        });
+    }
+    //methodes
+    public function manageAppointments()
+    {
+
+    }
+    public function managePatients()
+    {
+
+    }
+}

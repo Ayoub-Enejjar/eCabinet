@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('message');
             $table->boolean('est_lu')->default(0);
+            $table->timestamp('sent_at');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

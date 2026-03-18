@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role' , ['ADMIN' ,'DOCTOR' ,'PATIENT ' ,' SECRETARY']);
+            $table->enum('role' , ['ADMIN' ,'DOCTOR' ,'PATIENT' ,'SECRETARY']);
             //champs specifique pour medicen
             $table->string('specialiste')->nullable();
             $table->string('telephone_pro')->nullable();

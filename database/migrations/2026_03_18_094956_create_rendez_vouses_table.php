@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('date_heure');
             $table->enum('statut' , ['PENDING' , 'CONFIRMED' , 'CONCELLED' , 'COMPLETED']);
             $table->string('motif');
-            $table->foreignId('medicin')->constrained('users');
+            $table->foreignId('medicin_id')->constrained('users');
             $table->foreignId('patient_id')->constrained('users');
             $table->timestamps();
         });

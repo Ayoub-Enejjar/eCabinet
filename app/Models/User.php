@@ -55,4 +55,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //relation avec table notification
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function login()
+    {
+       
+    }
+    public function logout()
+    {
+
+    }
 }
