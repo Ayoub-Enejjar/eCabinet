@@ -14,4 +14,5 @@ Route::post('addSecretary' , [AdminController::class , 'createSecretary']);
 Route::post('addPatient' , [AdminController::class , 'createPatient']);
 
 Route::post('login' , [UserController::class, 'login']);
+Route::post('logout' , [UserController::class, 'logout']);
 
