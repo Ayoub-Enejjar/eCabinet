@@ -20,7 +20,7 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class);
     }
-    //methode
+    //methods
     public function markAsRead()
     {
 

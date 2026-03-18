@@ -20,9 +20,9 @@ class Consultation extends Model
     {
         return $this->hasOne(Ordonnance::class);
     }
-    //methode
+    //methods
     public function genererRapport()
     {
-        
+
     }
 }

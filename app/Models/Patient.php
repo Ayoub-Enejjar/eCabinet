@@ -18,7 +18,7 @@ class Patient extends User
         return $this->hasMany('rendez_vouses' , 'patient_id');
     }
 
-    //methodes
+    //methods
     public function register()
     {
 

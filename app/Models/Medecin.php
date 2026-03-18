@@ -17,7 +17,7 @@ class Medecin extends Model
     {
         return $this->hasMany('rendez_vouses' , 'medecin_id');
     }
-    //methodes
+    //methods
     public function viewSchedule()
     {
 

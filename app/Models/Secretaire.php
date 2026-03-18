@@ -12,7 +12,7 @@ class Secretaire extends User
             $builder->where('role', 'SECRETARY');
         });
     }
-    //methodes
+    //methods
     public function manageAppointments()
     {
 

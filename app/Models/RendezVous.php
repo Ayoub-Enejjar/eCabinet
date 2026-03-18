@@ -28,7 +28,7 @@ class RendezVous extends Model
         return $this->hasOne(Consultation::class);
     }
 
-    //methodes:
+    //methods:
     public function confirmer()
     {
 

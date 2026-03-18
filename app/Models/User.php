@@ -56,7 +56,7 @@ class User extends Authenticatable
         ];
     }
 
-    //relation avec table notification
+    //relations
     public function notification()
     {
         return $this->hasMany(Notification::class);
@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     public function login()
     {
-       
+
     }
     public function logout()
     {

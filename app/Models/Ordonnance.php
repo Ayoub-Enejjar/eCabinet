@@ -16,7 +16,7 @@ class Ordonnance extends Model
     {
         return $this->belongsTo(Consultation::class);
     }
-    //methodes
+    //methods
     public function generatePDF()
     {
 
