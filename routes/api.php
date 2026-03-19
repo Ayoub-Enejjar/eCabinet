@@ -23,7 +23,7 @@ Route::post('logout' , [UserController::class, 'logout'])->middleware('auth:sanc
 
 Route::post('register' , [PatientController::class , 'register']);
 
-Route::post('/rendezvous', [RendezVousController::class, 'createRendezVous']);
+Route::post('/rendezvous', [PatientController::class, 'requestAppointment']);
 Route::patch('/rendezvous/{id}/confirm', [RendezVousController::class, 'confirmer']);
 Route::patch('/rendezvous/{id}/cancel', [RendezVousController::class, 'annuler']);
 
