@@ -8,21 +8,30 @@ use App\Models\User;
 use App\Models\Patient;
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
 {
 
     public function register(CreatePatientRequest $request)
     {
-        $RegisterData = $request->validated() ;
-        $RegisterData['role'] = 'PATIENT' ;
-        $patient = User::create($RegisterData);
+        $patientData = $request->validated();
+        $patientData['password'] = Hash::make($patientData['password']);
+
+        if (array_key_exists('numero_secretaire_sociale', $patientData)) {
+            $patientData['numero_securite_sociale'] = $patientData['numero_secretaire_sociale'];
+            unset($patientData['numero_secretaire_sociale']);
+        }
+
+        $patientData['role'] = 'PATIENT';
+        $patient = User::create($patientData);
+
         return response()->json([
-            'message'=> 'Patient register with succesful',
-            'user'=> $patient
-        ] , 200);
+            'message' => 'adding Patient with succesful',
+            'user' => $patient,
+        ], 200);
     }
-    
+
     public function requestAppointment(RendezVousRequest $request)
     {
         $RendezVousData = $request->validated();
