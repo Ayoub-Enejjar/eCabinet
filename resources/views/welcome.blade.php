@@ -36,7 +36,7 @@
         <!-- Left Side: Visual Sanctuary -->
         <section class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary">
             <div class="absolute inset-0 z-0">
-                <img alt="Modern medical office with wooden accents and soft lighting" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj7N5WmuttgacaCBQroaZJIRFOIsb-c16XLIOjQbWNR2W-rKdEvW8yjEhl5rBjMQRAiAU7q6t1vg4hwOCOPMGWtMU0qlUHpP4lz0py5K4is288A8avVL_zhLvvbjz5vrz3rgtodSJAq2WFrPQNowIDhWnTUPg3n6Uiz4IPeHYC-Ww9FhyVzxTjO-FZYgCNUE5DXgVUV_LPxbtRurgpBArvlfGtmMAc4OYv2Byk-hVCT_uSbVkz-NPyrXUBi6E-LDXDVfPwHvu4P3ac"/>
+                <img alt="Modern medical office with wooden accents and soft lighting" class="w-full h-full object-cover" src="{{ asset('images/medical-bg.jpg') }}"/>
                 <div class="absolute inset-0 teal-overlay mix-blend-multiply"></div>
             </div>
             <div class="relative z-10 flex flex-col justify-between p-16 w-full">

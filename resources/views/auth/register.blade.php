@@ -29,7 +29,7 @@
     <main class="flex min-h-screen">
         <!-- Left Side: Visual Anchor -->
         <section class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary">
-            <img alt="Medical precision" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60" src="https://images.unsplash.com/photo-1576091160550-217359f42f8c?q=80&w=2940&auto=format&fit=crop">
+            <img alt="Medical precision" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60" src="{{ asset('images/doctor-bg.jpg') }}">
             <div class="relative z-10 flex flex-col justify-center px-16 text-on-primary">
                 <div class="mb-8">
                     <span class="text-4xl font-headline font-black tracking-tighter uppercase">eCabinet</span>

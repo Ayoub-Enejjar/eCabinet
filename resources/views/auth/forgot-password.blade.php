@@ -27,7 +27,7 @@
         <!-- Left Side: Visual Anchor -->
         <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center bg-primary">
             <div class="absolute inset-0 z-0">
-                <img alt="Medical precision" class="w-full h-full object-cover opacity-60 mix-blend-overlay" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2960&auto=format&fit=crop">
+                <img alt="Medical precision" class="w-full h-full object-cover opacity-60 mix-blend-overlay" src="{{ asset('images/verify-bg.jpg') }}">
             </div>
             <div class="relative z-10 px-16 text-on-primary max-w-xl text-center lg:text-left">
                 <div class="mb-8">
