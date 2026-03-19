@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RendezVous extends Model
 {
-    protected $table = 'rendez_vouses';
+    protected $table = 'rendez_vous';
     protected $fillable = [
         'date_heure', 'statut' , 'motif' ,
         'patient_id' , 'medecin_id'
@@ -17,24 +17,14 @@ class RendezVous extends Model
     //relations
     public function patient()
     {
-        return $this->belongsTo(Patient::class , 'patient_id');
+        return $this->belongsTo(User::class , 'patient_id');
     }
     public function medecin()
     {
-        return $this->belongsTo(Medecin::class , 'medecin_id');
+        return $this->belongsTo(User::class , 'medecin_id');
     }
     public function consultations()
     {
         return $this->hasOne(Consultation::class);
-    }
-
-    //methods:
-    public function confirmer()
-    {
-
-    }
-    public function annuler()
-    {
-
     }
 }

@@ -17,18 +17,4 @@ class Patient extends User
     {
         return $this->hasMany(RendezVous::class , 'patient_id');
     }
-
-    //methods
-    public function register()
-    {
-
-    }
-    public function requestAppointment()
-    {
-
-    }
-    public function viewMyProgress()
-    {
-
-    }
 }

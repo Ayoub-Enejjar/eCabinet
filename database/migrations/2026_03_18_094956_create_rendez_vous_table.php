@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rendez_vouses', function (Blueprint $table) {
+        Schema::create('rendez_vous', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date_heure');
             $table->enum('statut' , ['PENDING' , 'CONFIRMED' , 'CANCELLED' , 'COMPLETED']);

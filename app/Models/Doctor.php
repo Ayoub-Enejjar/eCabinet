@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Medecin extends User
+class Doctor extends User
 {
     protected static function booted()
     {

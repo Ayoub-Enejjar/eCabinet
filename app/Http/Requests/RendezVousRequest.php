@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreatePatientRequest extends FormRequest
+class RendezVousRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,10 @@ class CreatePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'date_naissance' => 'required|date',
-            'adresse' => 'required|string',
-            'telephone' => 'required|string|max:20',
-            'numero_secretaire_sociale' => 'required|string',
-            'groupe_sanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-'
+            'date_heure'=>'required|date',
+            'motif'=>'required|string' ,
+            'patient_id'=>['required' , Rule::exists('users', 'id')->where('role', 'PATIENT')] ,
+            'medecin_id' => ['required',Rule::exists('users', 'id')->where('role', 'DOCTOR')],
         ];
     }
 }
