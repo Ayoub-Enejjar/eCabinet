@@ -47,7 +47,7 @@
                         <img class="w-10 h-10 rounded-full border-2 border-teal-800 shadow-md" src="https://ui-avatars.com/api/?name=Dr+Ahmed&background=0F766E&color=fff&bold=true" alt="Avatar">
                         <img class="w-10 h-10 rounded-full border-2 border-teal-800 shadow-md" src="https://ui-avatars.com/api/?name=Dr+Sarah&background=042F2E&color=fff&bold=true" alt="Avatar">
                     </div>
-                    <span class="text-white/90 text-sm font-medium tracking-wide">Rejoignez 2,000+ professionnels de santé</span>
+                    <span class="text-white/90 text-sm font-medium tracking-wide">Rejoignez 2,000+ de patent</span>
                 </div>
             </div>
 

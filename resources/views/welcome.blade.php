@@ -54,7 +54,7 @@
                         <img alt="Doctor profile" class="w-10 h-10 rounded-full border-2 border-on-primary" src="https://ui-avatars.com/api/?name=Dr+Ahmed&background=0F766E&color=fff&bold=true">
                         <img alt="Doctor profile" class="w-10 h-10 rounded-full border-2 border-on-primary" src="https://ui-avatars.com/api/?name=Dr+Sarah&background=042F2E&color=fff&bold=true">
                     </div>
-                    <p class="text-on-primary-container text-sm font-medium tracking-wide">Rejoignez 2,000+ professionnels de santé</p>
+                    <p class="text-on-primary-container text-sm font-medium tracking-wide">Rejoignez 2,000+ de patients</p>
                 </div>
             </div>
         </section>

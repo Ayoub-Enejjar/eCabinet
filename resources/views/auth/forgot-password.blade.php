@@ -33,9 +33,11 @@
                 <div class="mb-8">
                     <span class="text-3xl font-headline font-black tracking-tight text-primary-fixed uppercase">eCabinet</span>
                 </div>
-                <h2 class="text-4xl font-headline font-bold leading-tight mb-4">La Sérénité pour vos Essentiels.</h2>
+                <div class="glass-panel p-10 rounded-xl max-w-lg">
+                <h2 class="text-4xl font-headline font-bold leading-tight mb-4 ">La Sérénité pour vos Essentiels.</h2>
                 <p class="text-lg text-primary-fixed/80 font-body leading-relaxed">Vivez une interface de gestion haut de gamme—tranquille, organisée et sous un contrôle total de votre inventaire médical.</p>
             </div>
+    </div>
             <div class="absolute bottom-12 left-12 right-12 flex justify-between items-center text-primary-fixed/40 text-xs tracking-widest uppercase font-medium">
                 <span>EST. 2024</span>
                 <span>PRÉCISION D'INVENTAIRE</span>
