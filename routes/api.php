@@ -10,15 +10,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-Route::post('addDoctor' , [AdminController::class , 'createDoctor']);
-Route::post('addSecretary' , [AdminController::class , 'createSecretary']);
-Route::post('addPatient' , [AdminController::class , 'createPatient']);
-Route::get('stats' , [AdminController::class , 'viewGlobalStats'])->middleware('auth:sanctum',  'checkAdmin');
-
-
 Route::post('login' , [UserController::class, 'login']);
 Route::post('logout' , [UserController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::post('addDoctor' , [AdminController::class , 'createDoctor'])->middleware('auth:sanctum',  'checkAdmin');
+Route::post('addSecretary' , [AdminController::class , 'createSecretary'])->middleware('auth:sanctum',  'checkAdmin');
+Route::post('addPatient' , [AdminController::class , 'createPatient'])->middleware('auth:sanctum',  'checkAdmin');
+Route::get('stats' , [AdminController::class , 'viewGlobalStats'])->middleware('auth:sanctum',  'checkAdmin');
 
 
 Route::post('register' , [PatientController::class , 'register']);
