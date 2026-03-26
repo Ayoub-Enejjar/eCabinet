@@ -26,7 +26,6 @@ class RendezVousRequest extends FormRequest
         return [
             'date_heure'=>'required|date',
             'motif'=>'required|string' ,
-            'patient_id'=>['required' , Rule::exists('users', 'id')->where('role', 'PATIENT')] ,
             'medecin_id' => ['required',Rule::exists('users', 'id')->where('role', 'DOCTOR')],
         ];
     }

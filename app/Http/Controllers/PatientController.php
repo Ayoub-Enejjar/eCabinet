@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Patient;
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
@@ -29,8 +30,10 @@ class PatientController extends Controller
 
     public function requestAppointment(RendezVousRequest $request)
     {
+        $user_id = Auth::user()->id ;
         $RendezVousData = $request->validated();
         $RendezVousData['statut'] = 'PENDING';
+        $RendezVousData['patient_id'] = $user_id;
         $rendezVous = RendezVous::create($RendezVousData);
 
         return response()->json([
