@@ -14,7 +14,7 @@ Route::get('/user', function (Request $request) {
 Route::post('addDoctor' , [AdminController::class , 'createDoctor']);
 Route::post('addSecretary' , [AdminController::class , 'createSecretary']);
 Route::post('addPatient' , [AdminController::class , 'createPatient']);
-Route::get('stats' , [AdminController::class , 'viewGlobalStats']);
+Route::get('stats' , [AdminController::class , 'viewGlobalStats'])->middleware('auth:sanctum',  'checkAdmin');
 
 
 Route::post('login' , [UserController::class, 'login']);
