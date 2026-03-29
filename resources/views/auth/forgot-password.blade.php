@@ -31,7 +31,7 @@
             </div>
             <div class="relative z-10 px-16 text-on-primary max-w-xl text-center lg:text-left">
                 <div class="mb-8">
-                    <span class="text-3xl font-headline font-black tracking-tight text-primary-fixed uppercase">eCabinet</span>
+                    <x-logo size="large" iconColor="text-white" textColor="text-white" />
                 </div>
                 <div class="glass-panel p-10 rounded-xl max-w-lg">
                 <h2 class="text-4xl font-headline font-bold leading-tight mb-4 ">La Sérénité pour vos Essentiels.</h2>
@@ -47,7 +47,9 @@
         <!-- Right Side: Reset Form -->
         <div class="w-full lg:w-1/2 flex flex-col bg-surface-container-lowest relative">
             <nav class="fixed top-0 w-full lg:w-1/2 z-50 flex justify-between items-center px-8 py-8 lg:px-12">
-                <div class="lg:hidden text-2xl font-headline font-black text-primary tracking-tight uppercase">eCabinet</div>
+                <div class="lg:hidden">
+                    <x-logo class="drop-shadow-sm" />
+                </div>
                 <div class="ml-auto">
                     <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
                         <span class="material-symbols-outlined">help_outline</span>

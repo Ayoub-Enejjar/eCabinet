@@ -87,13 +87,7 @@
 <!-- Sidebar Navigation -->
 <nav class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-[10px_0_30px_-5px_rgba(13,148,136,0.05)] flex flex-col p-4 gap-2 z-50">
     <div class="flex items-center gap-3 px-3 py-6 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
-            <span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
-        </div>
-        <div>
-            <h1 class="text-xl font-bold tracking-tight text-teal-700 dark:text-teal-300 font-headline">eCabinet</h1>
-            <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Clinical Admin</p>
-        </div>
+        <x-logo />
     </div>
     
     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300' : 'text-slate-500 hover:text-teal-600 hover:bg-slate-200/50' }} font-semibold rounded-lg transition-all duration-300 scale-98 active:scale-95">

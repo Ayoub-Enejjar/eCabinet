@@ -41,7 +41,7 @@
             </div>
             <div class="relative z-10 flex flex-col justify-between p-16 w-full">
                 <div>
-                    <span class="text-on-primary-container font-headline font-black text-3xl tracking-tight uppercase">eCabinet</span>
+                    <x-logo size="large" iconColor="text-white" textColor="text-white" />
                 </div>
                 <div class="glass-panel p-10 rounded-xl max-w-lg">
                     <h2 class="font-headline text-on-primary-container text-4xl font-bold mb-4 leading-tight">La gestion clinique, réinventée.</h2>
@@ -134,7 +134,7 @@
 
     <!-- Logo Floating (Mobile Only) -->
     <div class="lg:hidden fixed top-6 left-8 z-50">
-        <span class="text-primary font-headline font-black text-2xl tracking-tight uppercase">eCabinet</span>
+        <x-logo class="drop-shadow-sm" />
     </div>
 </body>
 </html>

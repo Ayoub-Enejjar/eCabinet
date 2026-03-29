@@ -31,7 +31,7 @@
             </div>
             <div class="relative z-10 px-16 text-on-primary max-w-xl">
                 <div class="mb-8">
-                    <span class="text-3xl font-headline font-black tracking-tight text-primary-fixed uppercase">eCabinet</span>
+                    <x-logo size="large" iconColor="text-white" textColor="text-white" />
                 </div>
                 <h2 class="text-4xl font-headline font-bold leading-tight mb-4">Une dernière étape.</h2>
                 <p class="text-lg text-primary-fixed/80 font-body leading-relaxed">Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer ?</p>

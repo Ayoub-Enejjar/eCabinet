@@ -31,7 +31,7 @@
             </div>
             <div class="relative z-10 px-16 text-on-primary max-w-xl">
                 <div class="mb-8">
-                    <span class="text-3xl font-headline font-black tracking-tight text-primary-fixed uppercase">eCabinet</span>
+                    <x-logo size="large" iconColor="text-white" textColor="text-white" />
                 </div>
                 <h2 class="text-4xl font-headline font-bold leading-tight mb-4">Sécurisez votre accès.</h2>
                 <p class="text-lg text-primary-fixed/80 font-body leading-relaxed">Définissez un nouveau mot de passe fort pour protéger vos données de santé et votre inventaire clinique.</p>

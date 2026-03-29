@@ -32,7 +32,7 @@
             <img alt="Medical precision" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60" src="{{ asset('images/doctor-bg.jpg') }}">
             <div class="relative z-10 flex flex-col justify-center px-16 text-on-primary">
                 <div class="mb-8">
-                    <span class="text-4xl font-headline font-black tracking-tighter uppercase">eCabinet</span>
+                    <x-logo size="large" iconColor="text-white" textColor="text-white" />
                 </div>
                 <h2 class="text-5xl font-headline font-extrabold leading-tight mb-6">
                     Votre santé mérite <br/> une clarté absolue.
@@ -147,7 +147,7 @@
 
     <!-- Logo Floating (Mobile Only) -->
     <div class="lg:hidden fixed top-6 left-8 z-50">
-        <span class="text-primary font-headline font-black text-2xl tracking-tight uppercase">eCabinet</span>
+        <x-logo class="drop-shadow-sm" />
     </div>
 </body>
 </html>
