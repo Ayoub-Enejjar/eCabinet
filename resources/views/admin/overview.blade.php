@@ -71,19 +71,16 @@
     <canvas id="appointmentsChart"></canvas>
 </div>
 </div>
-<!-- Side Inventory Quick Stats -->
-<div class="space-y-6">
-<div class="bg-primary p-6 rounded-xl shadow-lg text-white">
-<div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
-</div>
+<!-- Side User Statistics Chart -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_10px_30px_-5px_rgba(0,106,97,0.08)]">
+<div class="flex items-center justify-between mb-8">
 <div>
-<p class="text-xs font-bold opacity-80 uppercase tracking-tight">System Status</p>
-<p class="text-lg font-bold">100% Operational</p>
+<h3 class="text-lg font-bold font-headline text-on-surface">User Distribution</h3>
+<p class="text-sm text-on-surface-variant">Live role breakdown</p>
 </div>
 </div>
-<p class="text-xs opacity-70 mb-4 leading-relaxed">All clinical modules are running at peak performance.</p>
+<div class="relative h-64 w-full flex justify-center">
+    <canvas id="usersChart"></canvas>
 </div>
 </div>
 </div>
@@ -201,6 +198,50 @@
                         ticks: { color: '#6d7a77' },
                         grid: { display: false },
                         border: { display: false }
+                    }
+                }
+            }
+        });
+
+        // User Distribution Chart
+        const userCtx = document.getElementById('usersChart').getContext('2d');
+        const doctorsCount = {{ $doctorsCount }};
+        const patientsCount = {{ $patientsCount }};
+        const secretariesCount = {{ $secretariesCount }};
+        
+        new Chart(userCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Doctors', 'Patients', 'Secretaries'],
+                datasets: [{
+                    data: [doctorsCount, patientsCount, secretariesCount],
+                    backgroundColor: [
+                        '#006a61', // Primary Teal
+                        '#39b8fd', // Secondary Blue
+                        '#fd7e14'  // Orange/Tertiary
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            font: {
+                                family: "'Inter', sans-serif",
+                                size: 12,
+                                weight: '600'
+                            },
+                            color: '#4a5568'
+                        }
                     }
                 }
             }
