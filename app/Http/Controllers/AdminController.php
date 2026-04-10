@@ -103,7 +103,7 @@ class AdminController extends Controller
         }
         return back()->with('success', 'Secretary created successfully.');
     }
-  
+
     public function viewGlobalStats()
     {
         return response()->json([

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PatientController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,8 +29,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::post('/doctors', [AdminController::class, 'createDoctor'])->name('doctors.store');
     Route::post('/secretaries', [AdminController::class, 'createSecretary'])->name('secretaries.store');
-    Route::post('/patients', [AdminController::class, 'createPatient'])->name('patients.store');
+    Route::post('/patients', [PatientController::class, 'register'])->name('patients.store');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
