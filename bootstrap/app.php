@@ -22,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         ]);
 
+        $middleware->web(append: [
+            \App\Http\Middleware\PrivacyLockdownMiddleware::class,
+        ]);
+
         $middleware->redirectUsersTo(function (\Illuminate\Http\Request $request) {
             if ($request->user() && $request->user()->role === 'ADMIN') {
                 return route('admin.dashboard');

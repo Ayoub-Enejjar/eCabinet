@@ -30,6 +30,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/secretaries', [AdminController::class, 'createSecretary'])->name('secretaries.store');
     Route::post('/patients', [PatientController::class, 'register'])->name('patients.store');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+
+    Route::post('/settings/lockdown', [AdminController::class, 'toggleLockdown'])->name('settings.lockdown');
+    Route::post('/settings/alert-protocol/{protocol}/toggle', [AdminController::class, 'toggleAlertProtocol'])->name('settings.alert.toggle');
 });
 
 // Patient Portal Routes

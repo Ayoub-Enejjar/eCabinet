@@ -9,6 +9,9 @@ use App\Models\Consultation;
 use App\Models\RendezVous;
 use App\Models\User;
 use App\Models\UserActivity;
+use App\Models\SystemSetting;
+use App\Models\AlertProtocol;
+use App\Models\ClinicLicense;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -68,7 +71,32 @@ class AdminController extends Controller
 
     public function settings()
     {
-        return view('admin.settings');
+        $auditLogs = UserActivity::with('user')->latest()->take(10)->get();
+        // Load Settings
+        $lockdownStatus = SystemSetting::where('key', 'privacy_lockdown')->value('value') === 'true';
+        $cloudStorage = SystemSetting::where('key', 'storage_cloud_usage')->value('value') ?? 0;
+        $serverUptime = SystemSetting::where('key', 'server_uptime')->value('value') ?? 0;
+        $dataEfficiency = SystemSetting::where('key', 'data_efficiency')->value('value') ?? 0;
+        
+        $alertProtocols = AlertProtocol::all();
+        $licenses = ClinicLicense::all();
+
+        return view('admin.settings', compact('auditLogs', 'lockdownStatus', 'cloudStorage', 'serverUptime', 'dataEfficiency', 'alertProtocols', 'licenses'));
+    }
+
+    public function toggleLockdown()
+    {
+        $setting = SystemSetting::firstOrCreate(['key' => 'privacy_lockdown']);
+        $newValue = $setting->value === 'true' ? 'false' : 'true';
+        $setting->update(['value' => $newValue]);
+
+        return back()->with('success', 'Privacy Lockdown status updated.');
+    }
+
+    public function toggleAlertProtocol(AlertProtocol $protocol)
+    {
+        $protocol->update(['is_active' => !$protocol->is_active]);
+        return back()->with('success', 'Alert protocol status updated.');
     }
 
     // ─── Delete User ─────────────────────────────────────────────────────
