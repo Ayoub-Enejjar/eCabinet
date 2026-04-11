@@ -11,6 +11,11 @@ class Ordonnance extends Model
         'contenu_medicaments' , 'chemin_pdf',
         'consultation_id'
     ];
+    
+    protected $casts = [
+        'contenu_medicaments' => 'array',
+    ];
+
     //relations
     public function consultation()
     {
