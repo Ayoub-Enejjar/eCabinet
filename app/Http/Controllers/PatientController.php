@@ -91,11 +91,11 @@ class PatientController extends Controller
     public function medicalRecord()
     {
         $user = Auth::user();
-        
+
         $appointmentsIds = RendezVous::where('patient_id', $user->id)
             ->where('statut', 'COMPLETED')
             ->pluck('id');
-            
+
         $consultations = Consultation::whereIn('rendez_vous_id', $appointmentsIds)
             ->with(['rendezVous.medecin', 'ordonnance'])
             ->orderBy('created_at', 'desc')
@@ -168,12 +168,11 @@ class PatientController extends Controller
         $patient = User::create($patientData);
         $user_role = Auth::user()->role ;
         if($user_role == "ADMIN"){
-        $controller = new AdminController();
-        return $controller->patients();
+        return back()->with('success' , 'patient ajouter avec success !');
         }else if($user_role == "SECRETARY"){
-
+        return back()->with('success' , 'patient ajouter avec success');
         }else{
-            //return view('welcome');
+            return view('login');
         }
     }
 

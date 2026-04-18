@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-  
+
         if ($request->user()->role === 'ADMIN') {
             return redirect()->route('admin.dashboard');
         }
@@ -36,7 +36,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('patient.dashboard');
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($request->user()->role === 'SECRETARY') {
+            return redirect()->route('secretary.dashboard');
+        }
+
+        return redirect()->intended(route('login', absolute: false));
     }
 
     /**

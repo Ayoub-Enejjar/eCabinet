@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\SecretaireController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,5 +44,18 @@ Route::middleware(['auth'])->prefix('patient')->name('patient.')->group(function
     Route::get('/parametres', [PatientController::class, 'settings'])->name('settings');
     Route::patch('/parametres', [PatientController::class, 'updateSettings'])->name('settings.update');
 });
+//secretary portal routes
+Route::middleware(['auth'])->prefix('secretary')->name('secretary.')->group(function () {
+    Route::get('/dashboard' , [SecretaireController::class , 'dashboard'])->name('dashboard');
+    Route::get('/parametres' , [SecretaireController::class , 'settigns'])->name('parametres');
+    Route::get('/patients' , [SecretaireController::class , 'patients'])->name('patients');
+    Route::get('/rendezVous' , [SecretaireController::class , 'rendezVous'])->name('rendezVous');
+    Route::get('/rendezVousAnnulee' , [SecretaireController::class , 'rvAnnulle'])->name('rvAnnulle');
+    Route::patch('/rendezvous/{rv}/confirm', [RendezVousController::class, 'confirmer'])->name('confirm');
+    Route::patch('/rendezvous/{id}/cancel', [RendezVousController::class, 'annuler'])->name('cancel');
+
+
+});
+
 
 require __DIR__.'/auth.php';
