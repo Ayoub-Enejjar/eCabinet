@@ -65,6 +65,29 @@ class PatientController extends Controller
     }
 
     /**
+     * Return JSON of working days for a given doctor (for front-end date blocking)
+     */
+    public function doctorAvailability($id)
+    {
+        $doctor = User::where('id', $id)->where('role', 'DOCTOR')->firstOrFail();
+        $availabilities = \App\Models\DoctorAvailability::where('user_id', $id)->get();
+
+        $workingDays = $availabilities->where('is_working', true)->pluck('day_of_week')->values();
+        $schedule = $availabilities->mapWithKeys(fn($a) => [
+            $a->day_of_week => [
+                'is_working' => (bool) $a->is_working,
+                'start'      => $a->start_time ? substr($a->start_time, 0, 5) : '09:00',
+                'end'        => $a->end_time   ? substr($a->end_time, 0, 5)   : '17:00',
+            ]
+        ]);
+
+        return response()->json([
+            'working_days' => $workingDays,
+            'schedule'     => $schedule,
+        ]);
+    }
+
+    /**
      * Show the appointment booking form
      */
     public function bookAppointment()
@@ -81,11 +104,39 @@ class PatientController extends Controller
     {
         $user_id = Auth::user()->id;
         $RendezVousData = $request->validated();
+
+        // Server-side: check doctor availability on the chosen day
+        $date = \Carbon\Carbon::parse($RendezVousData['date_heure']);
+        $dayOfWeek = $date->dayOfWeek; // 0=Sun, 6=Sat
+        $avail = \App\Models\DoctorAvailability::where('user_id', $RendezVousData['medecin_id'])
+            ->where('day_of_week', $dayOfWeek)
+            ->where('is_working', true)
+            ->first();
+
+        if (!$avail) {
+            return back()->withInput()->withErrors([
+                'date_heure' => 'Ce médecin n\'est pas disponible le ' . $date->translatedFormat('l') . '. Veuillez choisir un autre jour.',
+            ]);
+        }
+
         $RendezVousData['statut'] = 'PENDING';
         $RendezVousData['patient_id'] = $user_id;
-        $rendezVous = RendezVous::create($RendezVousData);
+        RendezVous::create($RendezVousData);
 
         return redirect()->route('patient.appointments')->with('success', 'Votre demande de rendez-vous a été envoyée avec succès !');
+    }
+
+    /**
+     * Cancel an existing appointment
+     */
+    public function cancelAppointment($id)
+    {
+        $rdv = RendezVous::where('patient_id', Auth::id())->findOrFail($id);
+        if (in_array($rdv->statut, ['PENDING', 'CONFIRMED'])) {
+            $rdv->update(['statut' => 'CANCELLED']);
+            return back()->with('success', 'Rendez-vous annulé avec succès.');
+        }
+        return back()->with('error', 'Impossible d\'annuler ce rendez-vous.');
     }
 
     public function medicalRecord()
@@ -125,12 +176,22 @@ class PatientController extends Controller
             'email'         => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'telephone'     => ['nullable', 'string', 'max:20'],
             'profile_photo' => ['nullable', 'image', 'max:2048'], // Max 2MB
+            'groupe_sanguin'=> ['nullable', 'string', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'date_naissance'=> ['nullable', 'date'],
+            'numero_securite_sociale' => ['nullable', 'string', 'max:50'],
+            'antecedents_medicaux' => ['nullable', 'string'],
+            'allergies'     => ['nullable', 'string'],
         ]);
 
         $userData = [
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'telephone' => $request->telephone,
+            'name'           => $request->name,
+            'email'          => $request->email,
+            'telephone'      => $request->telephone,
+            'groupe_sanguin' => $request->groupe_sanguin,
+            'date_naissance' => $request->date_naissance,
+            'numero_securite_sociale' => $request->numero_securite_sociale,
+            'antecedents_medicaux' => $request->antecedents_medicaux,
+            'allergies'      => $request->allergies,
         ];
 
         // Handle Profile Photo Upload

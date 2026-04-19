@@ -115,29 +115,7 @@
 
         <!-- Activity Feed Section -->
         <div class="space-y-6">
-            <div class="flex items-center justify-between">
-                <h4 class="text-xl font-bold font-headline text-on-surface dark:text-white">Activité Récente</h4>
-            </div>
-            <div class="bg-surface-container-low dark:bg-slate-900/50 p-6 rounded-3xl space-y-6 border border-slate-200 dark:border-slate-800">
-                @forelse($recentActivities as $activity)
-                <div class="flex gap-4 relative">
-                    <div class="z-10 w-8 h-8 rounded-full bg-primary-fixed dark:bg-teal-900/30 flex items-center justify-center text-primary dark:text-teal-400 text-sm shadow-sm">
-                        <span class="material-symbols-outlined scale-75">{{ $activity->type == 'login' ? 'login' : 'description' }}</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-xs font-bold text-on-surface dark:text-slate-200">
-                            {{ ucfirst($activity->type) }}
-                        </p>
-                        <p class="text-[11px] text-on-surface-variant dark:text-slate-400 mt-1 leading-relaxed">
-                            Activité enregistrée depuis {{ $activity->ip_address }}
-                        </p>
-                        <span class="text-[10px] font-medium text-slate-400 mt-2 block">{{ $activity->created_at->diffForHumans() }}</span>
-                    </div>
-                </div>
-                @empty
-                <p class="text-xs text-center text-on-surface-variant">Aucune activité récente.</p>
-                @endforelse
-            </div>
+
             
             <!-- Small Inventory Card -->
             <div class="bg-surface-container-highest dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
