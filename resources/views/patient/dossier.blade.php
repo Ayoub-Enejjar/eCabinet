@@ -235,9 +235,9 @@
                                     <p class="text-[10px] text-on-surface-variant">Ajouté le {{ \Carbon\Carbon::parse($consultation->created_at)->format('d/m/Y') }}</p>
                                 </div>
                             </div>
-                            <button class="p-2 rounded-lg bg-surface-container-lowest group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                            <a href="{{ route('patient.ordonnance.download', $consultation->ordonnance->id) }}" target="_blank" class="p-2 rounded-lg bg-surface-container-lowest group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                                 <span class="material-symbols-outlined text-lg">download</span>
-                            </button>
+                            </a>
                         </div>
                     @endif
                 @endforeach

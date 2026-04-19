@@ -181,6 +181,22 @@ class PatientController extends Controller
     }
 
     /**
+     * Export prescription as PDF (for patient)
+     */
+    public function downloadOrdonnance($id)
+    {
+        // Find ordonnance but ensure it belongs to the authenticated patient
+        $ordonnance = \App\Models\Ordonnance::whereHas('consultation.rendezVous', function($query) {
+            $query->where('patient_id', Auth::id());
+        })->with('consultation.rendezVous.medecin')->findOrFail($id);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('doctor.pdf.ordonnance', compact('ordonnance'));
+        
+        $date = $ordonnance->created_at->format('d-m-Y');
+        return $pdf->stream("Ma_Prescription_{$date}.pdf");
+    }
+
+    /**
      * Update patient profile settings
      */
     public function updateSettings(Request $request)

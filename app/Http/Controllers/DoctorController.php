@@ -153,6 +153,7 @@ class DoctorController extends Controller
             'diplome' => 'nullable|string|max:255',
             'telephone_pro' => 'nullable|string|max:20',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->only(['name', 'email', 'specialiste', 'diplome', 'telephone_pro']);
@@ -164,6 +165,15 @@ class DoctorController extends Controller
             }
             $path = $request->file('photo')->store('profile-photos', 'public');
             $data['profile_photo_path'] = $path;
+        }
+
+        if ($request->hasFile('signature')) {
+            // Delete old signature if exists
+            if ($user->signature_path) {
+                Storage::disk('public')->delete($user->signature_path);
+            }
+            $path = $request->file('signature')->store('signatures', 'public');
+            $data['signature_path'] = $path;
         }
 
         $user->update($data);

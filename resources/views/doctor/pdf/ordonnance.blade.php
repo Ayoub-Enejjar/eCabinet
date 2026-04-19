@@ -113,8 +113,13 @@
 
     <div class="signature-area">
         <strong>Signature & Cachet :</strong>
-        <br><br><br><br>
-        <hr style="border-top: 1px dashed #ccc;">
+        <br>
+        @if(auth()->user()->signature_path)
+            <img src="{{ public_path('storage/'.auth()->user()->signature_path) }}" style="max-height: 80px; max-width: 200px; margin-top: 10px;">
+        @else
+            <br><br><br>
+            <hr style="border-top: 1px dashed #ccc;">
+        @endif
     </div>
 
     <div class="clear"></div>

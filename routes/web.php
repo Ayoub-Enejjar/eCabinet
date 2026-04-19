@@ -52,6 +52,7 @@ Route::middleware(['auth'])->prefix('patient')->name('patient.')->group(function
     Route::get('/parametres', [PatientController::class, 'settings'])->name('settings');
     Route::patch('/parametres', [PatientController::class, 'updateSettings'])->name('settings.update');
     Route::get('/doctors/{id}/availability', [PatientController::class, 'doctorAvailability'])->name('doctor.availability');
+    Route::get('/ordonnance/{id}/download', [PatientController::class, 'downloadOrdonnance'])->name('ordonnance.download');
 });
 //secretary portal routes
 Route::middleware(['auth'])->prefix('secretary')->name('secretary.')->group(function () {
