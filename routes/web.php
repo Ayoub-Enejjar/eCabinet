@@ -85,8 +85,10 @@ Route::middleware(['auth', 'CheckDoctor'])->prefix('doctor')->name('doctor.')->g
     Route::post('/settings', [DoctorController::class, 'updateSettings'])->name('settings.update');
     Route::get('/patients/{id}/export', [DoctorController::class, 'exportPatient'])->name('patients.export');
     Route::post('/rendezvous/{id}/confirm', [DoctorController::class, 'confirmAppointment'])->name('rendezvous.confirm');
+    Route::get('/patients/{id}/consultation/create', [DoctorController::class, 'createConsultation'])->name('consultation.create');
     Route::post('/patients/{id}/consultation', [DoctorController::class, 'storeConsultation'])->name('consultation.store');
     Route::post('/consultation/{rendezvous_id}', [DoctorController::class, 'completeConsultation'])->name('consultation.complete');
+    Route::get('/ordonnance/{id}/export', [DoctorController::class, 'exportOrdonnance'])->name('ordonnance.export');
 });
 
 require __DIR__.'/auth.php';

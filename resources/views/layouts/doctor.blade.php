@@ -150,9 +150,14 @@
             <span class="text-sm font-semibold text-on-surface-variant font-manrope dark:text-slate-300">@yield('page-title', 'Espace Médecin')</span>
         </div>
         <div class="flex items-center gap-4">
+            @php
+                $unreadCount = \App\Models\Notification::where('user_id', Auth::id())->where('est_lu', false)->count();
+            @endphp
             <div class="relative group">
                 <span class="material-symbols-outlined p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full cursor-pointer transition-colors">notifications</span>
-                <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+                @if($unreadCount > 0)
+                    <span class="absolute top-2 right-2 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full animate-pulse">{{ $unreadCount }}</span>
+                @endif
             </div>
             <div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-800">
                 <div class="text-right hidden sm:block">

@@ -11,6 +11,8 @@ use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentRequested;
 
 class PatientController extends Controller
 {
@@ -31,6 +33,11 @@ class PatientController extends Controller
             ->take(5)
             ->get();
 
+        $recentNotifications = \App\Models\Notification::where('user_id', $user->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
         $totalAppointments = RendezVous::where('patient_id', $user->id)->count();
         $pendingAppointments = RendezVous::where('patient_id', $user->id)->where('statut', 'PENDING')->count();
         $confirmedAppointments = RendezVous::where('patient_id', $user->id)->where('statut', 'CONFIRMED')->count();
@@ -41,7 +48,8 @@ class PatientController extends Controller
             'recentAppointments',
             'totalAppointments',
             'pendingAppointments',
-            'confirmedAppointments'
+            'confirmedAppointments',
+            'recentNotifications'
         ));
     }
 
@@ -121,7 +129,15 @@ class PatientController extends Controller
 
         $RendezVousData['statut'] = 'PENDING';
         $RendezVousData['patient_id'] = $user_id;
-        RendezVous::create($RendezVousData);
+        $appointment = RendezVous::create($RendezVousData);
+
+        // Send Notification Email
+        try {
+            Mail::to(Auth::user()->email)->send(new AppointmentRequested($appointment));
+        } catch (\Exception $e) {
+            // Silently fail or log for now to not block the user
+            \Log::error("Failed to send appointment request email: " . $e->getMessage());
+        }
 
         return redirect()->route('patient.appointments')->with('success', 'Votre demande de rendez-vous a été envoyée avec succès !');
     }

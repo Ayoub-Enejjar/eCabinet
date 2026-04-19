@@ -12,6 +12,9 @@ use App\Models\Patient;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Notification;
+use App\Mail\AppointmentConfirmed;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DoctorAvailability;
 
@@ -278,6 +281,24 @@ class DoctorController extends Controller
                 'type' => 'APPOINTMENT_CONFIRMED',
                 'description' => "Rendez-vous confirmé pour le patient " . ($rdv->patient->name ?? 'inconnu'),
             ]);
+
+            // Create In-App Notification for Patient
+            try {
+                Notification::create([
+                    'user_id' => $rdv->patient_id,
+                    'type' => 'CONFIRMATION',
+                    'message' => "Votre rendez-vous avec le Dr. " . Auth::user()->name . " pour le " . \Carbon\Carbon::parse($rdv->date_heure)->translatedFormat('d F') . " a été confirmé.",
+                    'est_lu' => false,
+                    'sent_at' => now(),
+                ]);
+
+                // Send Email Notification
+                if ($rdv->patient && $rdv->patient->email) {
+                    Mail::to($rdv->patient->email)->send(new AppointmentConfirmed($rdv));
+                }
+            } catch (\Exception $e) {
+                \Log::error("Failed to notify patient of confirmation: " . $e->getMessage());
+            }
 
             return back()->with('success', 'Rendez-vous confirmé avec succès.');
         }
