@@ -83,13 +83,28 @@ class DoctorController extends Controller
 
     public function patients()
     {
-        $patients = Patient::latest()->paginate(10);
-        return view('doctor.patients', compact('patients'));
+        $doctorId = Auth::id();
+        $query = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        });
+
+        $totalPatients = $query->count();
+        $newPatientsThisMonth = (clone $query)->where('users.created_at', '>=', now()->startOfMonth())->count();
+        $patientsToday = (clone $query)->whereHas('RendezVous', function($q) use ($doctorId) {
+            $q->where('medecin_id', $doctorId)->whereDate('date_heure', today());
+        })->count();
+
+        $patients = $query->latest()->paginate(10);
+
+        return view('doctor.patients', compact('patients', 'totalPatients', 'newPatientsThisMonth', 'patientsToday'));
     }
 
     public function patientRecord($id)
     {
-        $patient = Patient::findOrFail($id);
+        $doctorId = Auth::id();
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        })->findOrFail($id);
         
         $consultations = Consultation::whereHas('rendezVous', function($query) use ($id) {
             $query->where('patient_id', $id);
@@ -100,13 +115,19 @@ class DoctorController extends Controller
 
     public function patientAnalyses($id)
     {
-        $patient = Patient::findOrFail($id);
+        $doctorId = Auth::id();
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        })->findOrFail($id);
         return view('doctor.analyses', compact('patient'));
     }
 
     public function patientReports($id)
     {
-        $patient = Patient::findOrFail($id);
+        $doctorId = Auth::id();
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        })->findOrFail($id);
         return view('doctor.reports', compact('patient'));
     }
 
@@ -173,9 +194,11 @@ class DoctorController extends Controller
 
    public function exportPatient($id)
     {
-        $patient = Patient::findOrFail($id);
+        $doctorId = Auth::id();
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        })->findOrFail($id);
         
-        // نفس الإصلاح هنا
         $consultations = Consultation::whereHas('rendezVous', function($query) use ($id) {
             $query->where('patient_id', $id);
         })->latest()->get();
@@ -238,7 +261,10 @@ class DoctorController extends Controller
     }
     public function createConsultation($id)
     {
-        $patient = Patient::findOrFail($id);
+        $doctorId = Auth::id();
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctorId) {
+            $query->where('medecin_id', $doctorId);
+        })->findOrFail($id);
         return view('doctor.consultation_create', compact('patient'));
     }
 
@@ -309,6 +335,11 @@ class DoctorController extends Controller
     public function storeConsultation(Request $request, $id)
     {
         $doctor = Auth::user();
+        // Ensure patient is linked to this doctor
+        $patient = Patient::whereHas('RendezVous', function($query) use ($doctor) {
+            $query->where('medecin_id', $doctor->id);
+        })->findOrFail($id);
+
         $rendezVous = RendezVous::firstOrCreate(
             ['patient_id' => $id, 'medecin_id' => $doctor->id, 'date_heure' => \Carbon\Carbon::today()],
             [
