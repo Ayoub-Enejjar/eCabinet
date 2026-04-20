@@ -22,35 +22,24 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+   public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        if ($request->user()->role === 'ADMIN') {
-            return redirect()->route('admin.dashboard');
-        }
+        // Récupération du rôle de l'utilisateur
+        $role = $request->user()->role;
 
-        if ($request->user()->role === 'PATIENT') {
-            return redirect()->route('patient.dashboard');
-        }
-
-<<<<<<< HEAD
-        if ($request->user()->role === 'SECRETARY') {
-            return redirect()->route('secretary.dashboard');
-        }
-
-        return redirect()->intended(route('login', absolute: false));
-=======
-        if ($request->user()->role === 'DOCTOR') {
-            return redirect()->route('doctor.dashboard');
-        }
-
-        return redirect()->intended(route('dashboard', absolute: false));
->>>>>>> 5a4426b2f3c09a51b3d886c88218dfe7b19a131e
+        // Redirection basée sur le rôle
+        return match ($role) {
+            'ADMIN'     => redirect()->route('admin.dashboard'),
+            'PATIENT'   => redirect()->route('patient.dashboard'),
+            'SECRETARY' => redirect()->route('secretary.dashboard'),
+            'DOCTOR'    => redirect()->route('doctor.dashboard'),
+            default     => redirect()->intended(route('dashboard', absolute: false)),
+        };
     }
-
     /**
      * Destroy an authenticated session.
      */
