@@ -11,17 +11,17 @@ use App\Models\User;
                 <!-- Page Header -->
                 <div class="flex items-end justify-between gap-4 mb-4">
                     <div>
-                        <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Gestion des RendezVous</h2>
-                        <p class="text-on-surface-variant font-body">Base de données des RendezVous .</p>
+                        <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Management of pending Appointments. </h2>
+                        <p class="text-on-surface-variant font-body">Database of pending appointments.</p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="text-sm font-semibold text-primary">{{ $rendezVous->total() }} RendezVous</span>
+                        <span class="text-sm font-semibold text-primary">{{ $rendezVous->total() }} appointments</span>
                     </div>
             </div>
                 <section class="col-span-12 xl:col-span-8 space-y-6">
             <div class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/5">
                 @if($rendezVous->count() == 0)
-                    <div class="p-10 text-center text-on-surface-variant font-medium">Aucun rendez-vous trouvé.</div>
+                    <div class="p-10 text-center text-on-surface-variant font-medium">No pending appointments found.</div>
                 @else
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">

@@ -43,13 +43,17 @@ class SecretaireController extends Controller
         $patients = User::where('role', 'PATIENT')->latest()->paginate(10);
         return view('secretary.patients', compact('patients'));
     }
-    public function rendezVous(){
-        $rendezVous = RendezVous::latest()->paginate(10);
-        return view('secretary.rendezVous' , compact('rendezVous'));
+    public function PendingrendezVous(){
+        $rendezVous = RendezVous::where('statut', 'PENDING')->latest()->paginate(10);
+        return view('secretary.PendingrendezVous' , compact('rendezVous'));
     }
-    public function rvAnnulle(){
+    public function ConfirmedrendezVous(){
+        $rendezVous = RendezVous::where('statut', 'CONFIRMED')->latest()->paginate(10);
+        return view('secretary.ConfirmedrendezVous' , compact('rendezVous'));
+    }
+    public function CancelledrendezVous(){
         $rendezVous = RendezVous::where('statut' , 'CANCELLED')->latest()->paginate(10);
-        return view('secretary.rvAnnulle' , compact('rendezVous'));
+        return view('secretary.CancelledrendezVous' , compact('rendezVous'));
     }
 
     //managePatients
@@ -67,4 +71,46 @@ class SecretaireController extends Controller
 
     return back()->with('success', 'Patient deleted successfully.');
     }
+
+        /**
+     * Update patient profile settings
+     */
+    public function updateSettings(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'profile_photo' => ['nullable', 'image', 'max:2048'], // Max 2MB
+        ]);
+
+        $userData = [
+            'name'           => $request->name,
+            'email'          => $request->email,
+        ];
+
+        // Handle Profile Photo Upload
+        if ($request->hasFile('profile_photo')) {
+            // Delete old photo if exists
+            if ($user->profile_photo_path) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_photo_path);
+            }
+
+            $path = $request->file('profile_photo')->store('profile-photos', 'public');
+            $userData['profile_photo_path'] = $path;
+        }
+
+        $user->update($userData);
+
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => ['required', 'confirmed', 'min:8'],
+            ]);
+            $user->update(['password' => Hash::make($request->password)]);
+        }
+
+        return back()->with('success', 'Profil mis à jour avec succès !');
+    }
+
 }

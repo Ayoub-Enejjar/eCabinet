@@ -48,7 +48,7 @@ Route::middleware(['auth'])->prefix('patient')->name('patient.')->group(function
     Route::get('/rendezvous', [PatientController::class, 'appointments'])->name('appointments');
     Route::get('/rendezvous/nouveau', [PatientController::class, 'bookAppointment'])->name('appointments.create');
     Route::post('/rendezvous', [PatientController::class, 'requestAppointment'])->name('appointments.store');
-    Route::post('/rendezvous/{id}/cancel', [PatientController::class, 'cancelAppointment'])->name('appointments.cancel');
+    Route::post('/rendezvous/{id}/cancel', [RendezVousController::class, 'annuler'])->name('appointments.cancel');
     Route::get('/dossier', [PatientController::class, 'medicalRecord'])->name('dossier');
     Route::get('/parametres', [PatientController::class, 'settings'])->name('settings');
     Route::patch('/parametres', [PatientController::class, 'updateSettings'])->name('settings.update');
@@ -59,10 +59,12 @@ Route::middleware(['auth'])->prefix('patient')->name('patient.')->group(function
 Route::middleware(['auth'])->prefix('secretary')->name('secretary.')->group(function () {
     Route::get('/dashboard' , [SecretaireController::class , 'dashboard'])->name('dashboard');
     Route::get('/parametres' , [SecretaireController::class , 'settigns'])->name('parametres');
+    Route::patch('/parametres', [SecretaireController::class, 'updateSettings'])->name('parametres');
     Route::get('/patients' , [SecretaireController::class , 'patients'])->name('patients');
-    Route::get('/rendezVous' , [SecretaireController::class , 'rendezVous'])->name('rendezVous');
-    Route::get('/rendezVousAnnulee' , [SecretaireController::class , 'rvAnnulle'])->name('rvAnnulle');
-    Route::patch('/rendezvous/{rv}/confirm', [RendezVousController::class, 'confirmer'])->name('confirm');
+    Route::get('/PendingrendezVous' , [SecretaireController::class , 'PendingrendezVous'])->name('PendingrendezVous');
+    Route::get('/ConfirmedrendezVous' , [SecretaireController::class , 'ConfirmedrendezVous'])->name('ConfirmedrendezVous');
+    Route::get('/rendezVousAnnulee' , [SecretaireController::class , 'CancelledrendezVous'])->name('CancelledrendezVous');
+    Route::patch('/rendezvous/{rv}/confirm', [RendezVousController::class, 'confirmAppointment'])->name('confirm');
     Route::patch('/rendezvous/{id}/cancel', [RendezVousController::class, 'annuler'])->name('cancel');
 
 
@@ -86,7 +88,7 @@ Route::middleware(['auth', 'CheckDoctor'])->prefix('doctor')->name('doctor.')->g
     Route::get('/settings', [DoctorController::class, 'settings'])->name('settings');
     Route::post('/settings', [DoctorController::class, 'updateSettings'])->name('settings.update');
     Route::get('/patients/{id}/export', [DoctorController::class, 'exportPatient'])->name('patients.export');
-    Route::post('/rendezvous/{id}/confirm', [DoctorController::class, 'confirmAppointment'])->name('rendezvous.confirm');
+    Route::post('/rendezvous/{id}/confirm', [RendezVousController::class, 'confirmAppointment'])->name('rendezvous.confirm');
     Route::get('/patients/{id}/consultation/create', [DoctorController::class, 'createConsultation'])->name('consultation.create');
     Route::post('/patients/{id}/consultation', [DoctorController::class, 'storeConsultation'])->name('consultation.store');
     Route::post('/consultation/{rendezvous_id}', [DoctorController::class, 'completeConsultation'])->name('consultation.complete');

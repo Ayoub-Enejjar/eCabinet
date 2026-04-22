@@ -99,7 +99,7 @@
     <aside class="hidden md:flex flex-col h-screen w-64 bg-slate-50 dark:bg-slate-950 p-4 space-y-2 sticky top-0 border-r-0">
         <div class="mb-8 px-2">
             <h1 class="text-2xl font-black text-teal-700 dark:text-teal-500 font-headline">eCabinet</h1>
-            <p class="text-xs font-medium text-slate-500 font-headline uppercase tracking-widest">Portail Secretaire </p>
+            <p class="text-xs font-medium text-slate-500 font-headline uppercase tracking-widest">Portail Secretary </p>
         </div>
 
         <nav class="space-y-1">
@@ -115,15 +115,22 @@
                 <span>liste des Patients</span>
             </a>
 
-            <a href="{{ route('secretary.rendezVous') }}"
+            <a href="{{ route('secretary.PendingrendezVous') }}"
                class="flex items-center space-x-3 px-4 py-3 rounded-lg font-headline font-medium transition-transform duration-200 {{ request()->routeIs('patient.dossier') ? 'bg-white dark:bg-slate-900 text-teal-600 dark:text-teal-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-teal-500 hover:translate-x-1' }}">
                 <span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
-                <span>rendez-vous</span>
+                <span>Pending rendez-vous</span>
             </a>
-            <a href="{{ route('secretary.rvAnnulle') }}"
+
+            <a href="{{ route('secretary.ConfirmedrendezVous') }}"
                class="flex items-center space-x-3 px-4 py-3 rounded-lg font-headline font-medium transition-transform duration-200 {{ request()->routeIs('patient.dossier') ? 'bg-white dark:bg-slate-900 text-teal-600 dark:text-teal-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-teal-500 hover:translate-x-1' }}">
                 <span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
-                <span>rendez-vous annulle</span>
+                <span>Confirmed rendez-vous</span>
+            </a>
+
+            <a href="{{ route('secretary.CancelledrendezVous') }}"
+               class="flex items-center space-x-3 px-4 py-3 rounded-lg font-headline font-medium transition-transform duration-200 {{ request()->routeIs('patient.dossier') ? 'bg-white dark:bg-slate-900 text-teal-600 dark:text-teal-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-teal-500 hover:translate-x-1' }}">
+                <span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+                <span>Cancelled rendez-vous</span>
             </a>
 
             <a href="{{ route('secretary.parametres') }}"
@@ -140,7 +147,7 @@
                 <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}" class="w-10 h-10 rounded-full object-cover">
                 <div class="overflow-hidden">
                     <p class="text-sm font-bold truncate">{{ auth()->user()->name ?? 'secretaire' }}</p>
-                    <p class="text-xs text-on-surface-variant truncate">secretaire</p>
+                    <p class="text-xs text-on-surface-variant truncate">secretary</p>
                 </div>
             </div>
 
@@ -148,7 +155,7 @@
                 @csrf
                 <button type="submit" class="w-full flex items-center justify-center space-x-2 text-xs font-bold text-error hover:underline">
                     <span class="material-symbols-outlined text-[16px]">logout</span>
-                    <span>Déconnexion</span>
+                    <span>logout</span>
                 </button>
             </form>
         </div>

@@ -72,9 +72,17 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-6 flex gap-3">
-                <button class="flex-1 py-2 text-sm font-semibold text-error hover:bg-error-container/20 transition-colors rounded-lg border border-error/20">Annuler</button>
+                <form action="{{ route('patient.appointments.cancel', $nextRdv) }}" method="POST" class="w-full">
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="w-full py-2 text-sm font-semibold text-error hover:bg-error-container/20 transition-colors rounded-lg border border-error/20">
+                        Annuler
+                    </button>
+                </form>
             </div>
         @else
             <div class="p-4 bg-surface-container-low rounded-xl text-center py-8">
@@ -118,82 +126,6 @@
         </div>
     </div>
 
-    <!-- Constantes Vitales - Metrics Section -->
-    <div class="md:col-span-12">
-        <h3 class="font-headline font-extrabold text-xl mb-4">Constantes Vitales</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            
-            <!-- Blood Pressure -->
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex justify-between items-start">
-                    <div class="p-2 bg-secondary-fixed/30 rounded-lg text-secondary">
-                        <span class="material-symbols-outlined" data-icon="monitor_heart">monitor_heart</span>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Pression Artérielle</p>
-                    <div class="flex items-baseline space-x-1">
-                        <span class="text-2xl font-black font-headline">12/8</span>
-                        <span class="text-xs text-outline">mmHg</span>
-                    </div>
-                </div>
-                <div class="mt-4 h-8 w-full flex items-end space-x-1">
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-1/2"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-3/4"></div>
-                    <div class="flex-1 bg-primary rounded-t-sm h-2/3"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-5/6"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-1/2"></div>
-                </div>
-            </div>
-
-            <!-- Heart Rate -->
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex justify-between items-start">
-                    <div class="p-2 bg-tertiary-fixed/30 rounded-lg text-tertiary">
-                        <span class="material-symbols-outlined" data-icon="favorite">favorite</span>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Fréquence Cardiaque</p>
-                    <div class="flex items-baseline space-x-1">
-                        <span class="text-2xl font-black font-headline">72</span>
-                        <span class="text-xs text-outline">bpm</span>
-                    </div>
-                </div>
-                <div class="mt-4 h-8 w-full flex items-end space-x-1">
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-2/3"></div>
-                    <div class="flex-1 bg-tertiary rounded-t-sm h-5/6"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-3/4"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-2/3"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-1/2"></div>
-                </div>
-            </div>
-
-            <!-- Weight -->
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex justify-between items-start">
-                    <div class="p-2 bg-primary-fixed/30 rounded-lg text-primary">
-                        <span class="material-symbols-outlined" data-icon="scale">scale</span>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Poids</p>
-                    <div class="flex items-baseline space-x-1">
-                        <span class="text-2xl font-black font-headline">75</span>
-                        <span class="text-xs text-outline">kg</span>
-                    </div>
-                </div>
-                <div class="mt-4 h-8 w-full flex items-end space-x-1">
-                    <div class="flex-1 bg-primary rounded-t-sm h-5/6"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-4/5"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-3/4"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-2/3"></div>
-                    <div class="flex-1 bg-surface-container-high rounded-t-sm h-2/3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Historique Rapide -->
     <div class="md:col-span-12 bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/10">
         <div class="flex justify-between items-center mb-8">
@@ -203,7 +135,7 @@
                 <span class="material-symbols-outlined text-sm ml-1" data-icon="arrow_forward">arrow_forward</span>
             </a>
         </div>
-        
+
         <div class="space-y-0">
             @forelse($recentAppointments->where('statut', 'COMPLETED') as $rdv)
                 <div class="flex items-center justify-between p-4 hover:bg-surface-container-low rounded-xl transition-colors cursor-pointer group">

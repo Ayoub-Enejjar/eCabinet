@@ -5,11 +5,11 @@
     <!-- Page Header -->
     <div class="flex items-end justify-between gap-4 mb-4">
         <div>
-            <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Gestion des Patients</h2>
-            <p class="text-on-surface-variant font-body">Base de données des patients enregistrés au cabinet.</p>
+            <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Patient Management.  </h2>
+            <p class="text-on-surface-variant font-body">Database of registered patients in the clinic.</p>
         </div>
         <div class="flex items-center gap-3">
-            <span class="text-sm font-semibold text-primary">{{ $patients->total() }} Patients actifs</span>
+            <span class="text-sm font-semibold text-primary">{{ $patients->total() }} Active Patients</span>
         </div>
     </div>
 
@@ -37,12 +37,12 @@
                     <div class="w-10 h-10 rounded-lg bg-secondary-fixed/30 flex items-center justify-center text-secondary">
                         <span class="material-symbols-outlined" data-icon="person_add">person_add</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline">Inscrire un Patient</h3>
+                    <h3 class="text-lg font-bold font-headline">Register a Patient</h3>
                 </div>
                 <form action="{{ route('admin.patients.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Nom Complet</label>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Full Name</label>
                         <input name="name" required class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" placeholder="ex: Jean Dupont" type="text"/>
                     </div>
                     <div class="space-y-1">
@@ -50,12 +50,12 @@
                         <input name="email" required type="email" class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" placeholder="jean.dupont@email.com"/>
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Adresse</label>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Address</label>
                         <input name="adresse" required type="text" class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" placeholder="123 rue de la Paix"/>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Groupe Sanguin</label>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Blood Group </label>
                             <select name="groupe_sanguin" required class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm">
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
@@ -68,17 +68,17 @@
                             </select>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Date Naissance</label>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Date of Birth</label>
                             <input name="date_naissance" required class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" type="date"/>
                         </div>
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Téléphone</label>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Phone Number</label>
                         <input name="telephone" required class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" placeholder="06 00 00 00 00" type="tel"/>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Mot De Passe</label>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant ml-1">Password</label>
                             <input name="password" required type="password" class="w-full px-4 py-3 bg-surface-container-high rounded-lg border-none focus:ring-2 focus:ring-primary/20 transition-all font-body text-sm" placeholder="••••••••"/>
                         </div>
                         <div class="space-y-1">
@@ -89,13 +89,13 @@
                     <div class="pt-4">
                         <button type="submit" class="w-full py-3.5 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-lg shadow-lg hover:bg-black/10 hover:shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-sm" data-icon="save">save</span>
-                            Enregistrer le Dossier
+                            Register Patient
                         </button>
                     </div>
                 </form>
             </div>
 
-            
+
         </section>
 
         <!-- Patient List Section -->

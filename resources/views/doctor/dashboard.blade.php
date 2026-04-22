@@ -5,18 +5,7 @@
 @section('content')
 <div class="p-8 space-y-8">
     <!-- Urgent Notifications Bar (Dynamic placeholder for now) -->
-    <div class="flex items-center gap-4 p-4 bg-tertiary-fixed rounded-2xl border border-tertiary/10 shadow-sm">
-        <div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
-        </div>
-        <div class="flex-1">
-            <p class="text-sm font-bold text-on-tertiary-fixed">Rappel de Sécurité</p>
-            <p class="text-xs text-on-tertiary-fixed-variant">Vérifiez vos protocoles d'alerte. 3 dossiers en attente de signature.</p>
-        </div>
-        <button class="px-4 py-2 bg-tertiary text-on-tertiary text-xs font-bold rounded-lg hover:opacity-90 transition-opacity">
-            Consulter
-        </button>
-    </div>
+
 
     <!-- Header Section -->
     <div class="flex justify-between items-end">
@@ -97,7 +86,7 @@
                             <p class="text-xs text-on-surface-variant dark:text-slate-400">{{ $appointment->motif ?? 'Consultation' }}</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            @if($appointment->statut === 'PENDING' || $appointment->statut === 'EN_ATTENTE')
+                            @if($appointment->statut === 'PENDING' )
                             <form action="{{ route('doctor.rendezvous.confirm', $appointment->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold rounded-lg hover:opacity-90 transition-opacity">
@@ -121,30 +110,10 @@
             </div>
         </div>
 
-        <!-- Activity Feed Section -->
-        <div class="space-y-6">
 
-            
-            <!-- Small Inventory Card -->
-            <div class="bg-surface-container-highest dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
-                <div class="flex items-center justify-between mb-4">
-                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant dark:text-slate-400">Stock Critique</p>
-                    <span class="material-symbols-outlined text-tertiary text-sm">inventory_2</span>
-                </div>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="font-medium dark:text-slate-200">Fournitures Médicales</span>
-                        <span class="text-tertiary font-bold">A vérifier</span>
-                    </div>
-                    <div class="h-1 bg-white/50 dark:bg-white/10 rounded-full overflow-hidden">
-                        <div class="h-full bg-tertiary w-1/5 rounded-full"></div>
-                    </div>
-                    <a href="{{ route('doctor.inventory') }}" class="block w-full text-center mt-2 py-2 text-[10px] font-bold text-primary dark:text-teal-400 border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors">
-                        Gérer le stock
-                    </a>
-                </div>
-            </div>
+
+
+
         </div>
-    </div>
 </div>
 @endsection

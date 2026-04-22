@@ -11,8 +11,8 @@ use App\Models\User;
                 <!-- Page Header -->
                 <div class="flex items-end justify-between gap-4 mb-4">
                     <div>
-                        <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Gestion des RendezVous</h2>
-                        <p class="text-on-surface-variant font-body">Base de données des RendezVous annulée .</p>
+                        <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Appointment Management</h2>
+                        <p class="text-on-surface-variant font-body">Database of canceled appointments.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-sm font-semibold text-primary">{{ $rendezVous->total() }} RendezVous</span>

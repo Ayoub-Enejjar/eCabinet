@@ -304,43 +304,7 @@ class DoctorController extends Controller
         return back()->with('success', 'Disponibilités mises à jour avec succès.');
     }
 
-    public function confirmAppointment($id)
-    {
-        $rdv = RendezVous::where('medecin_id', Auth::id())->findOrFail($id);
 
-        if ($rdv->statut === 'PENDING' || $rdv->statut === 'EN_ATTENTE') {
-            $rdv->update(['statut' => 'CONFIRMED']);
-
-            // Log activity
-            UserActivity::create([
-                'user_id' => Auth::id(),
-                'type' => 'APPOINTMENT_CONFIRMED',
-                'description' => "Rendez-vous confirmé pour le patient " . ($rdv->patient->name ?? 'inconnu'),
-            ]);
-
-            // Create In-App Notification for Patient
-            try {
-                Notification::create([
-                    'user_id' => $rdv->patient_id,
-                    'type' => 'CONFIRMATION',
-                    'message' => "Votre rendez-vous avec le Dr. " . Auth::user()->name . " pour le " . \Carbon\Carbon::parse($rdv->date_heure)->translatedFormat('d F') . " a été confirmé.",
-                    'est_lu' => false,
-                    'sent_at' => now(),
-                ]);
-
-                // Send Email Notification
-                if ($rdv->patient && $rdv->patient->email) {
-                    Mail::to($rdv->patient->email)->send(new AppointmentConfirmed($rdv));
-                }
-            } catch (\Exception $e) {
-                \Log::error("Failed to notify patient of confirmation: " . $e->getMessage());
-            }
-
-            return back()->with('success', 'Rendez-vous confirmé avec succès.');
-        }
-
-        return back()->with('error', 'Impossible de confirmer ce rendez-vous.');
-    }
 
     public function storeConsultation(Request $request, $id)
     {
