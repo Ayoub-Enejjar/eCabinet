@@ -33,7 +33,6 @@ class RendezVousController extends Controller
                 Notification::create([
                     'user_id' => $rdv->patient_id,
                     'type' => 'CONFIRMATION',
-                    'message' => "Votre rendez-vous avec le Dr. " . $rdv->medecin->name . " pour le " . \Carbon\Carbon::parse($rdv->date_heure)->translatedFormat('d F') . " a été confirmé.",
                     'est_lu' => false,
                     'sent_at' => now(),
                 ]);
@@ -56,13 +55,21 @@ class RendezVousController extends Controller
     public function annuler($id)
     {
         $rendezVous = RendezVous::findOrFail($id);
+
         if($rendezVous->statut == 'CONFIRMED' ){
             return back()->with('error' , 'Impossible d\'annuler ce rendez-vous.');
         }else{
+
+        if ($rendezVous->statut === 'CANCELLED') {
+            return back()->with('error', 'Ce rendez-vous est déjà annulé.');
+        }
+
         $rendezVous->update([
             'statut' => 'CANCELLED'
         ]);
+
         UserActivity::create([
+
                 'user_id' => Auth::id(),
                 'type' => 'ANNULATION',
                 'description' => "Rendez-vous annuller pour le patient " . ($rendezVous->patient->name ?? 'inconnu'),
@@ -104,6 +111,7 @@ class RendezVousController extends Controller
     $rendezVous->delete();
 
     return back()->with('success', 'Rendez-vous supprimé avec succès.');
+
     }
 }
 ?>
