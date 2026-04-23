@@ -1,108 +1,108 @@
-
 @extends('secretary.layout')
-@section('content')
+@section('title', 'Secretary - Pending Appointments')
 
+@section('content')
 
 <?php
 use App\Models\User;
 ?>
 
-            <div class="max-w-7xl mx-auto space-y-8">
-                <!-- Page Header -->
-                <div class="flex items-end justify-between gap-4 mb-4">
-                    <div>
-                        <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Management of pending Appointments. </h2>
-                        <p class="text-on-surface-variant font-body">Database of pending appointments.</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-sm font-semibold text-primary">{{ $rendezVous->total() }} appointments</span>
-                    </div>
-            </div>
-                <section class="col-span-12 xl:col-span-8 space-y-6">
-            <div class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/5">
-                @if($rendezVous->count() == 0)
-                    <div class="p-10 text-center text-on-surface-variant font-medium">No pending appointments found.</div>
-                @else
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant bg-surface-container-low">
-                                <th class="px-6 py-4">Patient</th>
-                                <th class="px-6 py-4">medecin</th>
-                                <th class="px-6 py-4 text-center">date/heure</th>
-                                <th class="px-6 py-4">motif</th>
-                                <th class="px-6 py-4">status </th>
-                                <th class="px-6 py-4 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-surface-container">
-                            @foreach($rendezVous as $rv)
-                            <tr class="hover:bg-surface-bright transition-colors group">
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <div>
-                                            <div class="flex items-center gap-2">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                            <p class="text-sm font-bold text-on-surface">{{ User::where('id', $rv->patient_id)->value('name') }}</p>
+<div class="max-w-7xl mx-auto space-y-8">
+    <!-- Page Header -->
+    <div class="flex items-end justify-between gap-4 mb-4">
+        <div>
+            <h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface mb-1">Pending Appointments</h2>
+            <p class="text-on-surface-variant font-body">Manage appointments awaiting confirmation.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-sm font-bold bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full">{{ $rendezVous->total() }} pending</span>
+        </div>
+    </div>
+    
+    <section class="space-y-6">
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_10px_30px_-5px_rgba(0,106,97,0.08)] border border-outline-variant/10">
+            @if($rendezVous->count() == 0)
+                <div class="p-10 text-center text-on-surface-variant font-medium">No pending appointments found.</div>
+            @else
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container-low text-[10px] font-bold uppercase tracking-widest text-outline">
+                        <tr>
+                            <th class="px-8 py-4">Patient</th>
+                            <th class="px-8 py-4">Doctor</th>
+                            <th class="px-8 py-4 text-center">Date & Time</th>
+                            <th class="px-8 py-4">Reason</th>
+                            <th class="px-8 py-4 text-center">Status</th>
+                            <th class="px-8 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/10">
+                        @foreach($rendezVous as $rv)
+                        <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                            <td class="px-8 py-4">
+                                @php $rv_patient = User::find($rv->patient_id); @endphp
+                                <div class="flex items-center gap-3">
+                                    @if($rv_patient && $rv_patient->profile_photo_url)
+                                        <img src="{{ $rv_patient->profile_photo_url }}" alt="{{ $rv_patient->name }}" class="w-8 h-8 rounded-full object-cover border-2 border-primary/10">
+                                    @else
+                                        <div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs uppercase">
+                                            {{ substr($rv_patient->name ?? '?', 0, 2) }}
                                         </div>
-                                    </div>
-                                </td>
+                                    @endif
+                                    <span class="font-bold text-sm text-on-surface">{{ $rv_patient->name ?? 'Unknown' }}</span>
+                                </div>
+                            </td>
 
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                    <p class="text-sm font-medium text-on-surface">{{ User::where('id', $rv->medecin_id)->value('name')}}</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                        <p class="text-xs font-semibold text-on-surface">{{ $rv->date_heure }}</p>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                        <p class="text-xs font-semibold text-on-surface">{{ $rv->motif  }}</p>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                        <p class="text-xs font-semibold text-on-surface">{{ $rv->statut}}</p>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-right">
+                            <td class="px-8 py-4 text-sm font-semibold text-on-surface-variant italic">
+                                Dr. {{ User::where('id', $rv->medecin_id)->value('name') }}
+                            </td>
+                            
+                            <td class="px-8 py-4 text-center">
+                                <span class="text-sm font-bold text-on-surface">{{ \Carbon\Carbon::parse($rv->date_heure)->format('M d, Y - H:i') }}</span>
+                            </td>
+                            
+                            <td class="px-8 py-4">
+                                <span class="text-sm font-medium text-on-surface-variant line-clamp-1">{{ $rv->motif }}</span>
+                            </td>
+                            
+                            <td class="px-8 py-4 text-center">
+                                <span class="px-3 py-1 text-[10px] font-bold rounded-full uppercase tracking-wider bg-tertiary-fixed/30 text-tertiary">
+                                    {{ $rv->statut }}
+                                </span>
+                            </td>
+                            
+                            <td class="px-8 py-4 text-right">
                                 <div class="flex justify-end gap-2">
-
-                                   <form action="{{ route('secretary.cancel', $rv) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-
-                                        <button type="submit"
-                                            class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <span class="material-symbols-outlined text-sm">cancel</span>
-                                        </button>
-                                    </form>
                                     <form action="{{ route('secretary.confirm', $rv) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-
-                                        <button type="submit"
-                                            class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors">
+                                        <button type="submit" class="p-2 text-primary-container bg-primary-fixed/30 hover:bg-primary-fixed/50 rounded-lg transition-colors" title="Confirm">
                                             <span class="material-symbols-outlined text-sm">check</span>
                                         </button>
                                     </form>
-                                    
 
+                                    <form action="{{ route('secretary.cancel', $rv) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="p-2 text-error bg-error-container/30 hover:bg-error-container hover:text-on-error-container rounded-lg transition-colors" title="Cancel">
+                                            <span class="material-symbols-outlined text-sm">cancel</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4 flex justify-center">
-                    {{ $rendezVous->links() }}
-                </div>
-                @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            
+            @if($rendezVous->hasPages())
+            <div class="p-4 border-t border-outline-variant/10 flex justify-center">
+                {{ $rendezVous->links() }}
+            </div>
+            @endif
+            @endif
+        </div>
+    </section>
+</div>
 @endsection

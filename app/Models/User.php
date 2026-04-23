@@ -38,6 +38,7 @@ class User extends Authenticatable
         'allergies',
         'diplome',
         'appearance_mode',
+        'signature_path',
     ];
 
     /**

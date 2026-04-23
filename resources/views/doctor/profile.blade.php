@@ -83,32 +83,36 @@
         <div class="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <h4 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant dark:text-slate-500 mb-4">Signature Virtuelle</h4>
             <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="w-full md:w-1/2">
-                    <p class="text-xs text-on-surface-variant dark:text-slate-400 mb-4 italic">Cette signature sera apposée sur vos ordonnances et comptes-rendus. Utilisez une image PNG avec fond transparent pour un meilleur rendu.</p>
+                <div class="w-full md:w-1/2 space-y-4">
+                    <p class="text-xs text-on-surface-variant dark:text-slate-400 italic">Dessinez votre signature directement ci-dessous ou importez une image PNG.</p>
+                    
+                    <!-- Drawing Canvas -->
+                    <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 relative h-40 group">
+                        <canvas id="signature-pad" class="w-full h-full cursor-crosshair touch-none"></canvas>
+                        <button type="button" id="clear-signature" class="absolute top-2 right-2 text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shadow-sm border border-slate-200">
+                            <span class="material-symbols-outlined text-[14px]">cleaning_services</span>
+                            Effacer
+                        </button>
+                    </div>
+
                     <div class="flex items-center gap-4">
-                        <label class="cursor-pointer bg-secondary/10 text-secondary dark:text-blue-400 px-6 py-3 rounded-xl font-bold text-xs hover:bg-secondary/20 transition-all">
-                            <span class="flex items-center gap-2">
-                                <span class="material-symbols-outlined">upload_file</span>
-                                Choisir une signature
-                            </span>
-                            <input name="signature" type="file" class="hidden" onchange="previewSignature(this)">
+                        <label class="cursor-pointer bg-secondary/5 text-secondary dark:text-blue-400 px-6 py-3 rounded-xl border border-secondary/20 hover:bg-secondary/10 font-bold text-xs transition-all w-full text-center flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">upload_file</span>
+                            Importer une image
+                            <input name="signature" id="signature-file" type="file" class="hidden" onchange="previewSignature(this)">
                         </label>
-                        @if($user->signature_path)
-                            <span class="text-[10px] text-teal-600 font-bold flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                                Signature configurée
-                            </span>
-                        @endif
                     </div>
                 </div>
-                <div class="w-full md:w-1/2 h-32 bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden">
-                    <img id="signature-preview" src="{{ $user->signature_path ? asset('storage/'.$user->signature_path) : '' }}" class="{{ $user->signature_path ? 'max-h-24' : 'hidden' }} object-contain">
-                    <div id="signature-placeholder" class="{{ $user->signature_path ? 'hidden' : '' }} text-slate-300 dark:text-slate-600 flex flex-col items-center">
-                        <span class="material-symbols-outlined text-4xl">signature</span>
-                        <p class="text-[10px] font-bold uppercase mt-2">Aperçu de la signature</p>
+
+                <div class="w-full md:w-1/2 h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden relative">
+                    <img id="signature-preview" src="{{ $user->signature_path ? asset('storage/'.$user->signature_path) : '' }}" class="{{ $user->signature_path ? 'max-h-32' : 'hidden' }} object-contain relative z-10 drop-shadow-md">
+                    <div id="signature-placeholder" class="{{ $user->signature_path ? 'hidden' : '' }} text-slate-300 dark:text-slate-600 flex flex-col items-center absolute inset-0 justify-center">
+                        <span class="material-symbols-outlined text-4xl mb-1">signature</span>
+                        <p class="text-[10px] font-bold uppercase tracking-widest mt-1">Aperçu de la signature</p>
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="signature_base64" id="signature_base64">
         </div>
 
         <div class="flex justify-end pt-4">
@@ -118,6 +122,9 @@
         </div>
     </form>
 </div>
+
+<!-- Signature Pad Library -->
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 
 <script>
 function previewFile() {
@@ -134,21 +141,76 @@ function previewFile() {
     }
 }
 
-function previewSignature(input) {
+// Signature Pad Implementation
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('signature-pad');
+    const clearButton = document.getElementById('clear-signature');
+    const signatureBase64Input = document.getElementById('signature_base64');
     const preview = document.getElementById('signature-preview');
     const placeholder = document.getElementById('signature-placeholder');
+    const fileInput = document.getElementById('signature-file');
 
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
+    // Initialize SignaturePad
+    const signaturePad = new SignaturePad(canvas, {
+        penColor: document.documentElement.classList.contains('dark') ? "white" : "black",
+        backgroundColor: "rgba(255, 255, 255, 0)" // transparent background
+    });
 
-        reader.onload = function(e) {
-            preview.src = e.target.result;
+    // Resize canvas to true dimensions
+    function resizeCanvas() {
+        const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+        signaturePad.clear(); // otherwise it might be stretched
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Update preview & hidden input when drawing ends
+    signaturePad.addEventListener("endStroke", () => {
+        if (!signaturePad.isEmpty()) {
+            const dataUrl = signaturePad.toDataURL("image/png");
+            signatureBase64Input.value = dataUrl;
+            
+            // Show in preview
+            preview.src = dataUrl;
             preview.classList.remove('hidden');
             placeholder.classList.add('hidden');
+            
+            // Clear file input to avoid conflicts
+            fileInput.value = '';
         }
+    });
 
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+    // Clear Button
+    clearButton.addEventListener('click', () => {
+        signaturePad.clear();
+        signatureBase64Input.value = '';
+        fileInput.value = '';
+        
+        // Reset preview
+        preview.src = '';
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+    });
+
+    // Global exposed for the file input onchange
+    window.previewSignature = function(input) {
+        if (input.files && input.files[0]) {
+            // Clear pad when uploading file
+            signaturePad.clear();
+            signatureBase64Input.value = '';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
+});
 </script>
 @endsection

@@ -151,6 +151,7 @@ class DoctorController extends Controller
         'telephone_pro' => 'nullable|string|max:20',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'signature' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'signature_base64' => 'nullable|string',
     ]);
 
     $data = $request->only([
@@ -173,8 +174,18 @@ class DoctorController extends Controller
     }
 
     // SIGNATURE
-    if ($request->hasFile('signature')) {
+    if ($request->filled('signature_base64')) {
+        if ($user->signature_path) {
+            Storage::disk('public')->delete($user->signature_path);
+        }
 
+        $image_parts = explode(";base64,", $request->signature_base64);
+        $image_base64 = base64_decode($image_parts[1]);
+        $filename = 'signatures/' . uniqid() . '.png';
+        Storage::disk('public')->put($filename, $image_base64);
+        
+        $data['signature_path'] = $filename;
+    } elseif ($request->hasFile('signature')) {
         if ($user->signature_path) {
             Storage::disk('public')->delete($user->signature_path);
         }
@@ -184,7 +195,6 @@ class DoctorController extends Controller
     }
 
     $user->update($data);
-
 
     return back()->with('success', 'Profil mis à jour avec succès.');
 }
@@ -340,12 +350,10 @@ class DoctorController extends Controller
             'notes_privees'    => $request->notes_privees,
         ]);
 
-        if ($request->filled('medicaments')) {
-            Ordonnance::create([
-                'consultation_id' => $consultation->id,
-                'contenu_medicaments'     => $request->medicaments,
-            ]);
-        }
+        Ordonnance::create([
+            'consultation_id' => $consultation->id,
+            'contenu_medicaments' => $request->filled('medicaments') ? $request->medicaments : 'Aucun médicament prescrit.',
+        ]);
 
         return redirect()->route('doctor.patients.show', $id)->with('success', 'Consultation et Ordonnance enregistrées avec succès !');
     }
