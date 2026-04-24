@@ -331,13 +331,24 @@ class DoctorController extends Controller
             $query->where('medecin_id', $doctor->id);
         })->findOrFail($id);
 
-        $rendezVous = RendezVous::create([
-            'patient_id' => $id,
-            'medecin_id' => $doctor->id,
-            'date_heure' => \Carbon\Carbon::now(),
-            'statut' => 'COMPLETED',
-            'motif'  => 'Consultation directe'
-        ]);
+        // Search for an existing appointment today that is not completed
+        $rendezVous = RendezVous::where('patient_id', $id)
+            ->where('medecin_id', $doctor->id)
+            ->whereDate('date_heure', \Carbon\Carbon::today())
+            ->where('statut', '!=', 'COMPLETED')
+            ->first();
+
+        if (!$rendezVous) {
+            $rendezVous = RendezVous::create([
+                'patient_id' => $id,
+                'medecin_id' => $doctor->id,
+                'date_heure' => \Carbon\Carbon::now(),
+                'statut' => 'COMPLETED',
+                'motif'  => 'Consultation directe'
+            ]);
+        } else {
+            $rendezVous->update(['statut' => 'COMPLETED']);
+        }
 
        $consultation = Consultation::create([
             'rendez_vous_id'   => $rendezVous->id,
