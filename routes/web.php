@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RendezVousController;
 use App\Http\Controllers\SecretaireController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,7 +16,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
 
-    $user = auth()->user();
+    $user = User::findOrFail(Auth::id());
     if ($user->role === 'ADMIN') return redirect()->route('admin.dashboard');
     if ($user->role === 'DOCTOR') return redirect()->route('doctor.dashboard');
     if ($user->role === 'SECRETARY') return redirect()->route('secretary.dashboard');
