@@ -332,7 +332,7 @@ class DoctorController extends Controller
         })->findOrFail($id);
 
         $rendezVous = RendezVous::firstOrCreate(
-            ['patient_id' => $id, 'medecin_id' => $doctor->id, 'date_heure' => \Carbon\Carbon::today()],
+            ['patient_id' => $id, 'medecin_id' => $doctor->id, 'date_heure' => \Carbon\Carbon::now()],
             [
                 'statut' => 'COMPLETED',
                 'motif'  => 'Consultation directe'
