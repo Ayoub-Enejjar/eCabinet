@@ -1,4 +1,4 @@
-# Optimized Laravel Dockerfile for Render
+# Optimized Laravel Dockerfile for Railway
 
 FROM php:8.2-cli
 
@@ -40,8 +40,8 @@ RUN php artisan config:clear || true
 RUN php artisan route:clear || true
 RUN php artisan view:clear || true
 
-# Expose Render port
-EXPOSE 10000
+# Expose port (Railway will override this if needed)
+EXPOSE 8080
 
 # Start Laravel
-CMD php artisan serve --host=0.0.0.0 --port=10000
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
