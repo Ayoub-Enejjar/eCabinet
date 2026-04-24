@@ -13,9 +13,6 @@
                 {{ $totalPatients }} patients actifs sous votre supervision
             </p>
         </div>
-        <div class="flex gap-3">
-            
-        </div>
     </div>
 
     <!-- Stats Section -->
