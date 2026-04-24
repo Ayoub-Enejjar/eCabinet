@@ -12,6 +12,7 @@
                 <span class="material-symbols-outlined text-primary dark:text-teal-400">analytics</span>
                 {{ $totalPatients }} patients actifs sous votre supervision
             </p>
+        </div>
     </div>
 
     <!-- Stats Section -->
