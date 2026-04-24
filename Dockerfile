@@ -51,5 +51,5 @@ RUN php artisan view:clear || true
 # Expose port (Railway will override this if needed)
 EXPOSE 8080
 
-# Start Laravel with migrations and seeding
-CMD php artisan migrate --force --seed && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+# Start Laravel with migrations, seeding and storage link
+CMD php artisan migrate --force --seed && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}

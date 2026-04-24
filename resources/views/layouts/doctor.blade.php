@@ -4,79 +4,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-secondary-fixed-variant": "#004c6e",
-                    "primary": "#00685f",
-                    "outline-variant": "#bcc9c6",
-                    "on-primary-fixed": "#00201d",
-                    "secondary-fixed": "#c9e6ff",
-                    "background": "#f7f9fb",
-                    "inverse-surface": "#2d3133",
-                    "surface-dim": "#d8dadc",
-                    "on-secondary-container": "#004666",
-                    "surface-variant": "#e0e3e5",
-                    "on-tertiary": "#ffffff",
-                    "surface": "#f7f9fb",
-                    "primary-container": "#008378",
-                    "inverse-primary": "#6bd8cb",
-                    "tertiary-fixed": "#ffdbce",
-                    "surface-container": "#eceef0",
-                    "on-tertiary-fixed": "#370e00",
-                    "tertiary-fixed-dim": "#ffb59a",
-                    "surface-bright": "#f7f9fb",
-                    "on-tertiary-container": "#fffbff",
-                    "secondary-fixed-dim": "#89ceff",
-                    "surface-container-highest": "#e0e3e5",
-                    "primary-fixed": "#89f5e7",
-                    "surface-container-lowest": "#ffffff",
-                    "on-error-container": "#93000a",
-                    "tertiary-container": "#b05e3d",
-                    "on-primary-container": "#f4fffc",
-                    "on-background": "#191c1e",
-                    "outline": "#6d7a77",
-                    "error": "#ba1a1a",
-                    "tertiary": "#924628",
-                    "surface-container-low": "#f2f4f6",
-                    "on-primary": "#ffffff",
-                    "on-tertiary-fixed-variant": "#773215",
-                    "on-surface-variant": "#3d4947",
-                    "on-secondary-fixed": "#001e2f",
-                    "surface-tint": "#006a61",
-                    "on-secondary": "#ffffff",
-                    "error-container": "#ffdad6",
-                    "inverse-on-surface": "#eff1f3",
-                    "secondary-container": "#39b8fd",
-                    "secondary": "#006591",
-                    "on-surface": "#191c1e",
-                    "surface-container-high": "#e6e8ea",
-                    "primary-fixed-dim": "#6bd8cb",
-                    "on-primary-fixed-variant": "#005049",
-                    "on-error": "#ffffff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Manrope"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
-          },
-        },
-      }
-    </script>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

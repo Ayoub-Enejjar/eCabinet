@@ -8,71 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
     <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-          tailwind.config = {
-            darkMode: "class",
-            theme: {
-              extend: {
-                colors: {
-                  "surface-bright": "#f7f9fb",
-                  "tertiary-fixed-dim": "#ffb59a",
-                  "surface-dim": "#d8dadc",
-                  "surface-variant": "#e0e3e5",
-                  "outline": "#6d7a77",
-                  "on-tertiary-fixed": "#370e00",
-                  "on-surface-variant": "#3d4947",
-                  "on-primary-fixed": "#00201d",
-                  "on-background": "#191c1e",
-                  "surface-container-low": "#f2f4f6",
-                  "primary-container": "#008378",
-                  "on-secondary-fixed": "#001e2f",
-                  "on-error-container": "#93000a",
-                  "primary-fixed-dim": "#6bd8cb",
-                  "on-secondary-fixed-variant": "#004c6e",
-                  "inverse-on-surface": "#eff1f3",
-                  "on-tertiary": "#ffffff",
-                  "on-surface": "#191c1e",
-                  "on-tertiary-fixed-variant": "#773215",
-                  "inverse-surface": "#2d3133",
-                  "tertiary": "#924628",
-                  "secondary-fixed-dim": "#89ceff",
-                  "secondary": "#006591",
-                  "outline-variant": "#bcc9c6",
-                  "error": "#ba1a1a",
-                  "surface-container-highest": "#e0e3e5",
-                  "surface-container-high": "#e6e8ea",
-                  "secondary-fixed": "#c9e6ff",
-                  "error-container": "#ffdad6",
-                  "surface-container": "#eceef0",
-                  "surface": "#f7f9fb",
-                  "surface-tint": "#006a61",
-                  "on-error": "#ffffff",
-                  "on-primary-fixed-variant": "#005049",
-                  "on-primary-container": "#f4fffc",
-                  "secondary-container": "#39b8fd",
-                  "on-secondary-container": "#004666",
-                  "primary": "#00685f",
-                  "tertiary-fixed": "#ffdbce",
-                  "on-primary": "#ffffff",
-                  "background": "#f7f9fb",
-                  "on-tertiary-container": "#fffbff",
-                  "primary-fixed": "#89f5e7",
-                  "tertiary-container": "#b05e3d",
-                  "on-secondary": "#ffffff",
-                  "inverse-primary": "#6bd8cb",
-                  "surface-container-lowest": "#ffffff"
-                },
-                fontFamily: {
-                  "headline": ["Manrope"],
-                  "body": ["Inter"],
-                  "label": ["Inter"]
-                },
-              },
-            },
-          }
-    </script>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

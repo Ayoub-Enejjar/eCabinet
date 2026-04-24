@@ -4,73 +4,8 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'eCabinet - Espace Patient')</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-high": "#e6e8ea",
-                        "error": "#ba1a1a",
-                        "inverse-primary": "#6bd8cb",
-                        "surface-bright": "#f7f9fb",
-                        "on-primary-fixed": "#00201d",
-                        "on-surface-variant": "#3d4947",
-                        "on-tertiary-fixed-variant": "#773215",
-                        "outline": "#6d7a77",
-                        "tertiary-fixed": "#ffdbce",
-                        "surface-container-highest": "#e0e3e5",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-fixed-variant": "#005049",
-                        "on-tertiary-container": "#fffbff",
-                        "inverse-on-surface": "#eff1f3",
-                        "tertiary-container": "#b05e3d",
-                        "on-tertiary-fixed": "#370e00",
-                        "surface-container": "#eceef0",
-                        "surface": "#f7f9fb",
-                        "on-error-container": "#93000a",
-                        "on-surface": "#191c1e",
-                        "on-primary-container": "#f4fffc",
-                        "secondary-fixed-dim": "#89ceff",
-                        "primary-container": "#008378",
-                        "on-background": "#191c1e",
-                        "on-error": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "surface-tint": "#006a61",
-                        "on-secondary-container": "#004666",
-                        "inverse-surface": "#2d3133",
-                        "primary-fixed": "#89f5e7",
-                        "background": "#f7f9fb",
-                        "tertiary": "#924628",
-                        "tertiary-fixed-dim": "#ffb59a",
-                        "surface-variant": "#e0e3e5",
-                        "on-secondary-fixed-variant": "#004c6e",
-                        "on-secondary-fixed": "#001e2f",
-                        "surface-dim": "#d8dadc",
-                        "primary": "#00685f",
-                        "outline-variant": "#bcc9c6",
-                        "secondary": "#006591",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary": "#ffffff",
-                        "secondary-fixed": "#c9e6ff",
-                        "primary-fixed-dim": "#6bd8cb",
-                        "error-container": "#ffdad6",
-                        "surface-container-low": "#f2f4f6",
-                        "secondary-container": "#39b8fd"
-                    },
-                    "fontFamily": {
-                        "headline": ["Manrope"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    }
-                },
-            },
-        }
-    </script>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-headline { font-family: 'Manrope', sans-serif; }
