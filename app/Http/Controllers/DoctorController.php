@@ -331,13 +331,13 @@ class DoctorController extends Controller
             $query->where('medecin_id', $doctor->id);
         })->findOrFail($id);
 
-        $rendezVous = RendezVous::firstOrCreate(
-            ['patient_id' => $id, 'medecin_id' => $doctor->id, 'date_heure' => \Carbon\Carbon::now()],
-            [
-                'statut' => 'COMPLETED',
-                'motif'  => 'Consultation directe'
-            ]
-        );
+        $rendezVous = RendezVous::create([
+            'patient_id' => $id,
+            'medecin_id' => $doctor->id,
+            'date_heure' => \Carbon\Carbon::now(),
+            'statut' => 'COMPLETED',
+            'motif'  => 'Consultation directe'
+        ]);
 
        $consultation = Consultation::create([
             'rendez_vous_id'   => $rendezVous->id,
