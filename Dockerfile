@@ -32,6 +32,14 @@ COPY . .
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Build assets
+RUN npm install
+RUN npm run build
+
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
