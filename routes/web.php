@@ -17,9 +17,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
 
     $user = User::findOrFail(Auth::id());
-    if ($user->role === 'ADMIN') return redirect()->route('admin.dashboard');
-    if ($user->role === 'DOCTOR') return redirect()->route('doctor.dashboard');
-    if ($user->role === 'SECRETARY') return redirect()->route('secretary.dashboard');
+    $role = strtoupper($user->role);
+    if ($role === 'ADMIN') return redirect()->route('admin.dashboard');
+    if ($role === 'DOCTOR') return redirect()->route('doctor.dashboard');
+    if ($role === 'SECRETARY') return redirect()->route('secretary.dashboard');
     return redirect()->route('patient.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

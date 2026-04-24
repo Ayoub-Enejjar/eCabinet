@@ -28,10 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Récupération du rôle de l'utilisateur
-        $role = $request->user()->role;
+        // Récupération du rôle de l'utilisateur (insensible à la casse)
+        $role = strtoupper($request->user()->role);
 
-        // Redirection basée sur le rôle (Version Match - plus propre)
+        // Redirection basée sur le rôle
         return match ($role) {
             'ADMIN'     => redirect()->route('admin.dashboard'),
             'PATIENT'   => redirect()->route('patient.dashboard'),
