@@ -34,6 +34,7 @@ class RendezVousController extends Controller
                 Notification::create([
                     'user_id' => $rdv->patient_id,
                     'type' => 'CONFIRMATION',
+                    'message' => "Votre rendez-vous avec le Dr. " . ($rdv->medecin->name ?? 'le médecin') . " pour le " . \Carbon\Carbon::parse($rdv->date_heure)->translatedFormat('d F à H\hi') . " a été confirmé.",
                     'est_lu' => false,
                     'sent_at' => now(),
                 ]);

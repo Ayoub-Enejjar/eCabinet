@@ -136,10 +136,17 @@ class PatientController extends Controller
 
         // Send Notification Email
         try {
+            Notification::create([
+                'user_id' => $user_id,
+                'type' => 'REQUEST',
+                'message' => "Votre demande de rendez-vous avec le Dr. " . ($appointment->medecin->name ?? 'le médecin') . " pour le " . \Carbon\Carbon::parse($appointment->date_heure)->translatedFormat('d F à H\hi') . " a été envoyée.",
+                'est_lu' => false,
+                'sent_at' => now(),
+            ]);
             Mail::to(Auth::user()->email)->queue(new AppointmentRequested($appointment));
         } catch (\Exception $e) {
             // Silently fail or log for now to not block the user
-            Log::error("Failed to send appointment request email: " . $e->getMessage());
+            Log::error("Failed to send appointment request notification/email: " . $e->getMessage());
         }
 
         return redirect()->route('patient.appointments')->with('success', 'Votre demande de rendez-vous a été envoyée avec succès !');
