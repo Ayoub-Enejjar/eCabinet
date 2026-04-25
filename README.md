@@ -1,4 +1,4 @@
-# <img src="public/favicon.png" width="40" height="40" align="center"> eCabinet - Système de Gestion Clinique Intelligent
+# ![eCabinet Icon](./public/favicon.png) eCabinet - Système de Gestion Clinique Intelligent
 
 eCabinet est une application web moderne conçue pour simplifier la gestion quotidienne des cabinets médicaux. Elle offre une plateforme collaborative permettant aux médecins, secrétaires et patients de communiquer et de gérer les soins de manière efficace.
 
