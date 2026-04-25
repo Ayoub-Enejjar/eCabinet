@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/favicon.png" width="120" alt="eCabinet Logo">
+  <img src="public/images/favicon.jpg" width="120" alt="eCabinet Logo">
 </p>
 
 # eCabinet - Système de Gestion Clinique Intelligent
