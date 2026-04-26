@@ -90,15 +90,10 @@ class SecretaireController extends Controller
             'email'          => $request->email,
         ];
 
-        // Handle Profile Photo Upload
+        // Handle Profile Photo Upload — stocker en Base64 dans la DB
         if ($request->hasFile('profile_photo')) {
-            // Delete old photo if exists
-            if ($user->profile_photo_path) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_photo_path);
-            }
-
-            $path = $request->file('profile_photo')->store('profile-photos', 'public');
-            $userData['profile_photo_path'] = $path;
+            $file = $request->file('profile_photo');
+            $userData['profile_photo_path'] = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
         }
 
         $user->update($userData);

@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="w-full md:w-1/2 h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden relative">
-                    <img id="signature-preview" src="{{ $user->signature_path ? asset('storage/'.$user->signature_path) : '' }}" class="{{ $user->signature_path ? 'max-h-32' : 'hidden' }} object-contain relative z-10 drop-shadow-md">
+                    <img id="signature-preview" src="{{ $user->signature_url ?? '' }}" class="{{ $user->signature_path ? 'max-h-32' : 'hidden' }} object-contain relative z-10 drop-shadow-md">
                     <div id="signature-placeholder" class="{{ $user->signature_path ? 'hidden' : '' }} text-slate-300 dark:text-slate-600 flex flex-col items-center absolute inset-0 justify-center">
                         <span class="material-symbols-outlined text-4xl mb-1">signature</span>
                         <p class="text-[10px] font-bold uppercase tracking-widest mt-1">Aperçu de la signature</p>

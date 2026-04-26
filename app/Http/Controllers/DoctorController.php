@@ -162,36 +162,19 @@ class DoctorController extends Controller
         'telephone_pro'
     ]);
 
-    // PHOTO
+    // PHOTO — stocker en Base64 directement dans la DB (pas de filesystem)
     if ($request->hasFile('photo')) {
-
-        if ($user->profile_photo_path) {
-            Storage::disk('public')->delete($user->profile_photo_path);
-        }
-
-        $data['profile_photo_path'] =
-            $request->file('photo')->store('profile-photos', 'public');
+        $file = $request->file('photo');
+        $data['profile_photo_path'] = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
     }
 
-    // SIGNATURE
+    // SIGNATURE dessinée (déjà en base64)
     if ($request->filled('signature_base64')) {
-        if ($user->signature_path) {
-            Storage::disk('public')->delete($user->signature_path);
-        }
-
-        $image_parts = explode(";base64,", $request->signature_base64);
-        $image_base64 = base64_decode($image_parts[1]);
-        $filename = 'signatures/' . uniqid() . '.png';
-        Storage::disk('public')->put($filename, $image_base64);
-
-        $data['signature_path'] = $filename;
+        $data['signature_path'] = $request->signature_base64;
     } elseif ($request->hasFile('signature')) {
-        if ($user->signature_path) {
-            Storage::disk('public')->delete($user->signature_path);
-        }
-
-        $data['signature_path'] =
-            $request->file('signature')->store('signatures', 'public');
+        // Signature importée comme fichier — convertir en base64
+        $file = $request->file('signature');
+        $data['signature_path'] = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
     }
     if (!$user) abort(401);
     $user->update($data);

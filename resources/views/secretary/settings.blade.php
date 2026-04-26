@@ -8,7 +8,7 @@
     <p class="text-on-surface-variant font-body max-w-2xl leading-relaxed">Update your personal information to ensure precise communication and management.</p>
 </div>
 
-<form method="POST" action="{{ route('secretary.parametres') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('secretary.parametres.update') }}" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
 

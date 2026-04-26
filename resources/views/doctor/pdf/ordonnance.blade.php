@@ -117,7 +117,13 @@
         <strong>Signature & Cachet :</strong>
         <br>
         @if($doctor->signature_path)
-            <img src="{{ public_path('storage/'.$doctor->signature_path) }}" style="max-height: 80px; max-width: 200px; margin-top: 10px;">
+            @php
+                // Supporte base64 Data URL (nouveau) et chemin local (ancien)
+                $sigSrc = (str_starts_with($doctor->signature_path, 'data:') || str_starts_with($doctor->signature_path, 'http'))
+                    ? $doctor->signature_path
+                    : 'file://' . public_path('storage/' . $doctor->signature_path);
+            @endphp
+            <img src="{{ $sigSrc }}" style="max-height: 80px; max-width: 200px; margin-top: 10px;">
         @else
             <br><br><br>
             <hr style="border-top: 1px dashed #ccc;">
