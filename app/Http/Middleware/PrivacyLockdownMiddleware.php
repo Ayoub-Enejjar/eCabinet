@@ -43,13 +43,15 @@ class PrivacyLockdownMiddleware
                 return $next($request);
             }
 
-            // 3. Block everyone else — redirect guests to /login with a message,
-            //    abort 503 only for already-authenticated non-admins.
-            if (!Auth::check()) {
-                return redirect('/login')->with('lockdown', 'Le système est en verrouillage de confidentialité. Contactez l\'administrateur.');
+            // 3. Block everyone else — If they are logged in as a non-admin, log them out.
+            //    This prevents them from getting trapped in a 503 error where they can't see the login page.
+            if (Auth::check()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
             }
 
-            abort(503, 'The system is currently on a Privacy Lockdown. Admin access only.');
+            return redirect('/login')->with('lockdown', 'Le système est en verrouillage de confidentialité. Accès Administrateur uniquement.');
         }
 
         return $next($request);
