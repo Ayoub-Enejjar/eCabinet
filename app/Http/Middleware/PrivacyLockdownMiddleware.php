@@ -20,9 +20,19 @@ class PrivacyLockdownMiddleware
         $isLockedDown = SystemSetting::where('key', 'privacy_lockdown')->value('value') === 'true';
 
         if ($isLockedDown) {
-            if (Auth::check() && Auth::user()->role !== 'ADMIN') {
-                abort(503, 'The system is currently on a Privacy Lockdown. Try again later.');
+            // 1. Always allow Admins
+            if (Auth::check() && Auth::user()->role === 'ADMIN') {
+                return $next($request);
             }
+
+            // 2. Always allow Auth routes (login, logout, etc) so users can log in/out
+            $allowedRoutes = ['login', 'logout', 'password.request', 'password.email', 'password.reset', 'password.update', 'password.confirm'];
+            if (in_array($request->route()?->getName(), $allowedRoutes)) {
+                return $next($request);
+            }
+
+            // 3. Block everyone else (Patients, Doctors, Secretaries, and Guests)
+            abort(503, 'The system is currently on a Privacy Lockdown. Admin access only.');
         }
 
         return $next($request);
