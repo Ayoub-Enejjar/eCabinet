@@ -195,7 +195,13 @@
 
         clearDateError();
         selectDate(val);
-        loadTimeSlots(day);
+        
+        // Fetch booked slots for this date
+        fetch(`/patient/doctors/${selectedDoctorId}/availability?date=${val}`)
+            .then(r => r.json())
+            .then(data => {
+                loadTimeSlots(day, data.booked_slots || []);
+            });
     }
 
     function showDateError(msg) {
@@ -215,7 +221,7 @@
         if (el) el.style.display = 'none';
     }
 
-    function loadTimeSlots(dayOfWeek) {
+    function loadTimeSlots(dayOfWeek, bookedSlots = []) {
         const container = document.getElementById('timeSlotsContainer');
         const sched = doctorSchedule[dayOfWeek];
 
@@ -242,11 +248,18 @@
             return;
         }
 
-        container.innerHTML = slots.map(t => `
-            <button type="button" class="py-2 text-xs font-semibold rounded-full bg-surface-container-high hover:bg-primary-fixed hover:text-primary transition-all time-slot" data-time="${t}" onclick="selectTime('${t}')">
-                ${t}
-            </button>
-        `).join('');
+        container.innerHTML = slots.map(t => {
+            const isBooked = bookedSlots.includes(t);
+            return `
+                <button type="button" 
+                    ${isBooked ? 'disabled' : ''}
+                    class="py-2 text-xs font-semibold rounded-full transition-all time-slot ${isBooked ? 'bg-slate-100 text-slate-300 cursor-not-allowed' : 'bg-surface-container-high hover:bg-primary-fixed hover:text-primary'}" 
+                    data-time="${t}" 
+                    onclick="selectTime('${t}')">
+                    ${t} ${isBooked ? '(Occupé)' : ''}
+                </button>
+            `;
+        }).join('');
     }
 
     function selectDate(date) {

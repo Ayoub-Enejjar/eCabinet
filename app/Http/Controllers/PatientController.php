@@ -78,7 +78,7 @@ class PatientController extends Controller
     /**
      * Return JSON of working days for a given doctor (for front-end date blocking)
      */
-    public function doctorAvailability($id)
+    public function doctorAvailability($id, Request $request)
     {
         $doctor = User::where('id', $id)->where('role', 'DOCTOR')->firstOrFail();
         $availabilities = \App\Models\DoctorAvailability::where('user_id', $id)->get();
@@ -92,9 +92,21 @@ class PatientController extends Controller
             ]
         ]);
 
+        $bookedSlots = [];
+        if ($request->has('date')) {
+            $bookedSlots = RendezVous::where('medecin_id', $id)
+                ->whereDate('date_heure', $request->date)
+                ->whereIn('statut', ['PENDING', 'CONFIRMED'])
+                ->get()
+                ->map(function($rv) {
+                    return $rv->date_heure->format('H:i');
+                })->toArray();
+        }
+
         return response()->json([
             'working_days' => $workingDays,
             'schedule'     => $schedule,
+            'booked_slots' => $bookedSlots,
         ]);
     }
 
@@ -127,6 +139,18 @@ class PatientController extends Controller
         if (!$avail) {
             return back()->withInput()->withErrors([
                 'date_heure' => 'Ce médecin n\'est pas disponible le ' . $date->translatedFormat('l') . '. Veuillez choisir un autre jour.',
+            ]);
+        }
+
+        // Check if slot is already booked
+        $isBooked = RendezVous::where('medecin_id', $RendezVousData['medecin_id'])
+            ->where('date_heure', $RendezVousData['date_heure'])
+            ->whereIn('statut', ['PENDING', 'CONFIRMED'])
+            ->exists();
+
+        if ($isBooked) {
+            return back()->withInput()->withErrors([
+                'date_heure' => 'Ce créneau horaire est déjà réservé. Veuillez en choisir un autre.',
             ]);
         }
 
