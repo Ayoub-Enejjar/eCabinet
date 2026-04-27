@@ -83,9 +83,13 @@
                             <tr class="hover:bg-surface-container-lowest transition-colors group">
                                 <td class="px-6 py-5">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-lg bg-primary-fixed-dim flex items-center justify-center font-bold text-on-primary-fixed">
-                                            {{ substr($secretary->name, 0, 2) }}
-                                        </div>
+                                        @if($secretary->profile_photo_url)
+                                            <img src="{{ $secretary->profile_photo_url }}" alt="{{ $secretary->name }}" class="w-10 h-10 rounded-lg object-cover border-2 border-primary/10">
+                                        @else
+                                            <div class="w-10 h-10 rounded-lg bg-primary-fixed-dim flex items-center justify-center font-bold text-on-primary-fixed">
+                                                {{ substr($secretary->name, 0, 2) }}
+                                            </div>
+                                        @endif
                                         <div>
                                             <p class="text-sm font-bold text-on-surface">{{ $secretary->name }}</p>
                                             <p class="text-[10px] text-on-surface-variant">Secrétaire</p>

@@ -52,7 +52,7 @@
                     <span>{{ $occupancyRate > 80 ? 'Optimal' : 'Disponible' }}</span>
                 </div>
                 <div class="h-2 bg-white/20 rounded-full overflow-hidden">
-                    <div class="h-full bg-white w-[{{ $occupancyRate }}%] rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-1000"></div>
+                    <div class="h-full bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-1000" style="width: {{ $occupancyRate }}%"></div>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
                             @if($appointment->patient->profile_photo_path)
-                                <img src="{{ asset('storage/'.$appointment->patient->profile_photo_path) }}" class="w-full h-full object-cover">
+                                <img src="{{ $appointment->patient->profile_photo_url }}" class="w-full h-full object-cover">
                             @else
                                 <span class="font-bold text-primary">{{ substr($appointment->patient->name, 0, 2) }}</span>
                             @endif

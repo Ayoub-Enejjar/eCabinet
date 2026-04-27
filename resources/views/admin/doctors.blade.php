@@ -73,7 +73,11 @@
                 <h3 class="text-3xl font-bold font-headline mb-6">{{ $doctors->total() }} Praticiens Actifs</h3>
                 <div class="flex -space-x-3 mb-8">
                     @foreach($doctors->take(4) as $doc)
-                        <div class="w-12 h-12 rounded-full border-4 border-white bg-primary text-on-primary flex flex-col items-center justify-center font-bold text-sm shadow-sm">{{ substr($doc->name, 0, 2) }}</div>
+                        @if($doc->profile_photo_url)
+                            <img src="{{ $doc->profile_photo_url }}" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                        @else
+                            <div class="w-12 h-12 rounded-full border-4 border-white bg-primary text-on-primary flex flex-col items-center justify-center font-bold text-sm shadow-sm">{{ substr($doc->name, 0, 2) }}</div>
+                        @endif
                     @endforeach
                     @if($doctors->count() > 4)
                         <div class="w-12 h-12 rounded-full border-4 border-white bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold text-sm shadow-sm">+{{ $doctors->count() - 4 }}</div>
@@ -113,9 +117,13 @@
                     <tr class="hover:bg-surface-container-lowest/80 transition-colors group">
                         <td class="px-8 py-5">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg bg-teal-100 text-teal-800 border-[3px] border-white shadow-sm">
-                                    {{ substr($doctor->name, 0, 2) }}
-                                </div>
+                                @if($doctor->profile_photo_url)
+                                    <img src="{{ $doctor->profile_photo_url }}" class="w-12 h-12 rounded-xl object-cover border-[3px] border-white shadow-sm">
+                                @else
+                                    <div class="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg bg-teal-100 text-teal-800 border-[3px] border-white shadow-sm">
+                                        {{ substr($doctor->name, 0, 2) }}
+                                    </div>
+                                @endif
                                 <div>
                                     <p class="font-extrabold text-on-surface font-headline">{{ $doctor->name }}</p>
                                     <p class="text-xs text-on-surface-variant font-medium">{{ $doctor->email }}</p>

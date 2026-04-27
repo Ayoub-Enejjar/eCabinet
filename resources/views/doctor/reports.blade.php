@@ -5,15 +5,19 @@
 <!-- TopAppBar Internal -->
 <header class="flex justify-between items-center mb-10">
 <div class="flex items-center gap-4">
-<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md">
-<img alt="Mme. Claire Marchand" class="w-full h-full object-cover" data-alt="Portrait of a middle-aged woman with a gentle smile and grey hair, professional medical profile lighting, soft background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTOisMuA_uM7hui8fpBX7ddb0srp5Q-oadiRDn1VPYou3zyEUFwO0YtK5KzSxwla2F630MQBh8CEMj30digNSOA67GQoQkR1Gqicbp9Hbax2_A43AMBkSA7945rIh-kku3XGyKU_jcUQH4YFjYDDAeyVH3hMXnKLJE-u8yYDlPjr5w9rczj9mPoDVuKbVigYgltMwcOqHsaih4oTEjxQ1XPZLQWunWHcs5sgXM8NVdkJxVlqRJsptWWcXItXGNLEJa5Pb49OqfiGj0">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md bg-slate-100 flex items-center justify-center">
+@if($patient->profile_photo_path)
+    <img src="{{ $patient->profile_photo_url }}" alt="{{ $patient->name }}" class="w-full h-full object-cover">
+@else
+    <span class="text-xl font-black text-primary">{{ substr($patient->name, 0, 2) }}</span>
+@endif
 </div>
 <div>
-<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Mme. Claire Marchand</h2>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">{{ $patient->name }}</h2>
 <div class="flex items-center gap-2 text-on-surface-variant font-medium text-sm">
-<span>ID: #994821</span>
+<span>ID: #PT-{{ $patient->id }}</span>
 <span class="w-1 h-1 rounded-full bg-outline"></span>
-<span>54 ans</span>
+<span>{{ \Carbon\Carbon::parse($patient->date_naissance)->age }} ans</span>
 </div>
 </div>
 </div>

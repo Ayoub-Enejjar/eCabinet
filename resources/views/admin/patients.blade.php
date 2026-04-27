@@ -118,7 +118,11 @@
                             <tr class="hover:bg-surface-bright transition-colors group">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold text-xs">{{ substr($patient->name, 0, 2) }}</div>
+                                        @if($patient->profile_photo_url)
+                                            <img src="{{ $patient->profile_photo_url }}" alt="{{ $patient->name }}" class="w-9 h-9 rounded-full object-cover border-2 border-primary/10">
+                                        @else
+                                            <div class="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold text-xs">{{ substr($patient->name, 0, 2) }}</div>
+                                        @endif
                                         <div>
                                             <p class="text-sm font-bold text-on-surface">{{ $patient->name }}</p>
                                             <p class="text-[10px] text-on-surface-variant">ID: #{{ $patient->id }}</p>

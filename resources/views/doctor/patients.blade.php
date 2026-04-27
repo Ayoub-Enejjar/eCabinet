@@ -36,7 +36,7 @@
                     @foreach($patients->take(5) as $p)
                         <div class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
                             @if($p->profile_photo_path)
-                                <img src="{{ asset('storage/'.$p->profile_photo_path) }}" class="w-full h-full object-cover">
+                                <img src="{{ $p->profile_photo_url }}" class="w-full h-full object-cover">
                             @else
                                 <span class="text-[10px] font-bold text-primary">{{ substr($p->name, 0, 2) }}</span>
                             @endif
@@ -70,7 +70,7 @@
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-700">
                                     @if($patient->profile_photo_path)
-                                        <img src="{{ asset('storage/'.$patient->profile_photo_path) }}" class="w-full h-full object-cover">
+                                        <img src="{{ $patient->profile_photo_url }}" class="w-full h-full object-cover">
                                     @else
                                         <span class="font-black text-primary dark:text-teal-400">{{ substr($patient->name, 0, 2) }}</span>
                                     @endif

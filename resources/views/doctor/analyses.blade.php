@@ -7,17 +7,21 @@
 <!-- Patient Header Hero -->
 <section class="mb-10 flex items-end justify-between">
 <div class="flex items-center gap-6">
-<div class="w-24 h-24 rounded-3xl overflow-hidden border-4 border-white shadow-xl rotate-3">
-<img alt="Claire Marchand" class="w-full h-full object-cover" data-alt="Portrait of a sophisticated middle-aged woman with kind eyes and short brown hair, gentle natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKLFexBXtTyQvq7weoIwunn7K6DukGCiTxuKY1ujq7PdqWutSL8csW4tNSBauKV_QcR6eNguv2a4RdxNgOEsh5JgWNHgua91U0zi8QEgBqzJW4-nfNZUzCXSA-YIf0VVNX8s0rKxkOgf9bmlVpUNUz0Zrb9QhheQVqIYg-Xp3OQZQWznrlIMd3htfXfmHDmFqx2aXTMq9kOips9msVLuNPROW3SX6t9kUvyltOghqRa3XmoNnFfqmOWJHdqBzDp1UqosiFIaPSGmXo">
+<div class="w-24 h-24 rounded-3xl overflow-hidden border-4 border-white shadow-xl rotate-3 bg-slate-100 flex items-center justify-center">
+@if($patient->profile_photo_path)
+    <img src="{{ $patient->profile_photo_url }}" alt="{{ $patient->name }}" class="w-full h-full object-cover">
+@else
+    <span class="text-3xl font-black text-primary">{{ substr($patient->name, 0, 2) }}</span>
+@endif
 </div>
 <div>
-<h1 class="text-4xl font-extrabold text-on-surface tracking-tight font-headline">Mme. Claire Marchand</h1>
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight font-headline">{{ $patient->name }}</h1>
 <div class="flex gap-4 mt-2">
-<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-full text-xs font-bold uppercase tracking-widest">ID: #CM-9821</span>
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-full text-xs font-bold uppercase tracking-widest">ID: #PT-{{ $patient->id }}</span>
 <span class="flex items-center gap-1 text-on-surface-variant text-sm font-medium">
 <span class="material-symbols-outlined text-base">calendar_today</span>
-                                    42 ans (12 Mars 1982)
-                                </span>
+    {{ \Carbon\Carbon::parse($patient->date_naissance)->age }} ans ({{ \Carbon\Carbon::parse($patient->date_naissance)->translatedFormat('d M Y') }})
+</span>
 </div>
 </div>
 </div>

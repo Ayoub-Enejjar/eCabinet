@@ -159,9 +159,13 @@
                     <tr class="hover:bg-surface-container-low/50 transition-colors group">
                         <td class="px-8 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs uppercase">
-                                    {{ substr($rv->patient->name, 0, 2) }}
-                                </div>
+                                @if($rv->patient->profile_photo_url)
+                                    <img src="{{ $rv->patient->profile_photo_url }}" alt="{{ $rv->patient->name }}" class="w-8 h-8 rounded-full object-cover border-2 border-primary/10">
+                                @else
+                                    <div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs uppercase">
+                                        {{ substr($rv->patient->name, 0, 2) }}
+                                    </div>
+                                @endif
                                 <span class="font-bold text-sm text-on-surface">{{ $rv->patient->name }}</span>
                             </div>
                         </td>

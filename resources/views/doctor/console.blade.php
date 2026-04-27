@@ -8,7 +8,7 @@
         <div class="relative">
             <div class="w-32 h-32 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden ring-4 ring-primary/10 shadow-md">
                 @if($patient->profile_photo_path)
-                    <img src="{{ asset('storage/'.$patient->profile_photo_path) }}" class="w-full h-full object-cover">
+                    <img src="{{ $patient->profile_photo_url }}" class="w-full h-full object-cover">
                 @else
                     <span class="text-4xl font-black text-primary">{{ substr($patient->name, 0, 2) }}</span>
                 @endif
