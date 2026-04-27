@@ -69,6 +69,13 @@
 
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
+                
+                @if (session('lockdown'))
+                    <div class="mb-4 px-4 py-3 bg-error/10 border border-error/20 text-error rounded-xl flex items-center gap-3">
+                        <span class="material-symbols-outlined shrink-0">lock</span>
+                        <p class="text-sm font-bold">{{ session('lockdown') }}</p>
+                    </div>
+                @endif
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
