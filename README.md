@@ -1,12 +1,12 @@
-<div align="center">
-
-![eCabinet Logo](public/images/favicon.jpg)
-
-</div>
+<p align="center">
+  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/favicon.jpg" width="120" alt="eCabinet Logo">
+</p>
 
 # eCabinet - Système de Gestion Clinique Intelligent
 
-![eCabinet Dashboard Preview](public/images/project_preview.png)
+<p align="center">
+  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/project_preview.png" alt="eCabinet Dashboard Preview" width="100%">
+</p>
 
 eCabinet est une application web moderne conçue pour simplifier la gestion quotidienne des cabinets médicaux. Elle offre une plateforme collaborative permettant aux médecins, secrétaires et patients de communiquer et de gérer les soins de manière efficace.
 
