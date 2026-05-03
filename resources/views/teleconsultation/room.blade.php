@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Téléconsultation - eCabinet</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://meet.jit.si/external_api.js"></script>
+    <script src="https://8x8.vc/vpaas-magic-cookie-9f640462003945ad8564fe19e47417d7/external_api.js"></script>
 </head>
 <body class="bg-gray-100 h-screen flex flex-col">
 
@@ -33,9 +33,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const domain = 'meet.jit.si';
-            // Create a unique but consistent room name based on the appointment ID
-            const roomName = 'eCabinet-Consultation-{{ env('APP_ENV', 'local') }}-{{ $rendezVous->id }}-{{ md5($rendezVous->created_at) }}';
+            const domain = '8x8.vc';
+            const appId = 'vpaas-magic-cookie-9f640462003945ad8564fe19e47417d7';
+            
+            // For JaaS, the room name MUST be prefixed with the AppID
+            const roomName = appId + '/eCabinet-Consultation-{{ env('APP_ENV', 'local') }}-{{ $rendezVous->id }}-{{ md5($rendezVous->created_at) }}';
             
             const options = {
                 roomName: roomName,
