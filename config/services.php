@@ -28,6 +28,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'jaas' => [
+        'app_id' => env('JAAS_APP_ID'),
+        'key_id' => env('JAAS_KEY_ID'),
+        'private_key' => env('JAAS_PRIVATE_KEY'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

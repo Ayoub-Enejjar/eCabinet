@@ -41,6 +41,7 @@
             
             const options = {
                 roomName: roomName,
+                jwt: '{{ $jwt }}',
                 width: '100%',
                 height: '100%',
                 parentNode: document.querySelector('#jitsi-container'),
