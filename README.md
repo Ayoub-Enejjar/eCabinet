@@ -1,13 +1,11 @@
 <p align="center">
-  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/favicon.jpg" width="80" alt="eCabinet Logo">
+  <img src="https://cdn.creativefabrica.com/2021/06/12/Medical-Online-Vector-Concept-Color-Graphics-13280857-1.jpg" width="100%" alt="eCabinet Medical Concept">
 </p>
 
 # eCabinet
 ### Système de Gestion Clinique Intégré
 
-<p align="center">
-  <img src="https://cdn.creativefabrica.com/2021/06/12/Medical-Online-Vector-Concept-Color-Graphics-13280857-1.jpg" width="100%" alt="eCabinet Medical Concept">
-</p>
+
 
 eCabinet est une solution logicielle moderne et sécurisée conçue pour optimiser les flux de travail des cabinets médicaux. Cette plateforme unifiée permet une collaboration fluide entre les médecins, le personnel administratif et les patients, tout en garantissant la confidentialité et la précision du suivi médical.
 
