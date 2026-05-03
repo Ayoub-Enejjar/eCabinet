@@ -65,9 +65,9 @@ class TeleconsultationController extends Controller
         $payload = json_encode([
             'aud' => 'jitsi',
             'iss' => 'chat',
-            'iat' => time(),
+            'iat' => time() - 60, // 1 minute in the past to avoid sync issues
             'exp' => time() + 3600, // 1 hour
-            'nbf' => time() - 10,
+            'nbf' => time() - 60,
             'sub' => $appId,
             'context' => [
                 'user' => [
@@ -91,7 +91,13 @@ class TeleconsultationController extends Controller
         $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
 
         $signature = '';
-        openssl_sign($base64UrlHeader . "." . $base64UrlPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+        $success = openssl_sign($base64UrlHeader . "." . $base64UrlPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+        
+        if (!$success) {
+            \Log::error('JaaS JWT Signing failed: ' . openssl_error_string());
+            return null;
+        }
+
         $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
 
         return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
