@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Téléconsultation - eCabinet</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://meet.jit.si/external_api.js"></script>
+    <script crossorigin src="https://unpkg.com/@daily-co/daily-js"></script>
 </head>
 <body class="bg-gray-100 h-screen flex flex-col">
 
@@ -33,39 +33,28 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const domain = 'meet.jit.si';
-            // Create a unique but consistent room name based on the appointment ID
-            const roomName = 'eCabinet-Consultation-{{ env('APP_ENV', 'local') }}-{{ $rendezVous->id }}-{{ md5($rendezVous->created_at) }}';
+            const container = document.getElementById('jitsi-container');
+            const roomUrl = '{{ $roomUrl }}';
             
-            const options = {
-                roomName: roomName,
-                width: '100%',
-                height: '100%',
-                parentNode: document.querySelector('#jitsi-container'),
-                userInfo: {
-                    displayName: '{{ $user->role === 'DOCTOR' ? "Dr. " : "" }}{{ $user->name }}',
+            const callFrame = window.DailyIframe.createFrame(container, {
+                iframeStyle: {
+                    width: '100%',
+                    height: '100%',
+                    border: '0',
                 },
-                configOverwrite: {
-                    startWithAudioMuted: false,
-                    startWithVideoMuted: false,
-                    prejoinPageEnabled: false, // Skip prejoin page to jump right in
-                    disableDeepLinking: true,
-                },
-                interfaceConfigOverwrite: {
-                    SHOW_JITSI_WATERMARK: false,
-                    SHOW_WATERMARK_FOR_GUESTS: false,
-                    TOOLBAR_BUTTONS: [
-                        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-                        'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
-                        'settings', 'raisehand', 'videoquality', 'filmstrip', 'tileview'
-                    ],
-                }
-            };
+                showLeaveButton: true,
+                showFullscreenButton: true,
+                lang: 'fr'
+            });
             
-            const api = new JitsiMeetExternalAPI(domain, options);
+            // Join the room with user name
+            callFrame.join({ 
+                url: roomUrl,
+                userName: '{{ $user->role === 'DOCTOR' ? "Dr. " : "" }}{{ $user->name }}'
+            });
             
-            // Redirect when hanging up
-            api.addEventListener('readyToClose', () => {
+            // Handle when user leaves the call
+            callFrame.on('left-meeting', (event) => {
                 window.location.href = "{{ $user->role === 'DOCTOR' ? route('doctor.schedule') : route('patient.appointments') }}";
             });
         });
