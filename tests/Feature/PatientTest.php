@@ -74,6 +74,7 @@ class PatientTest extends TestCase
             'medecin_id' => $this->doctor->id,
             'date_heure' => $nextMonday,
             'motif'      => 'Consultation générale',
+            'type'       => 'in_person',
         ]);
 
         $this->assertDatabaseHas('rendez_vous', [
@@ -90,6 +91,7 @@ class PatientTest extends TestCase
             'medecin_id' => $this->doctor->id,
             'date_heure' => now()->addDay()->format('Y-m-d H:i:s'),
             'motif'      => '',
+            'type'       => 'in_person',
         ]);
 
         $response->assertSessionHasErrors('motif');
@@ -102,6 +104,7 @@ class PatientTest extends TestCase
             'medecin_id' => 9999,
             'date_heure' => now()->addDay()->format('Y-m-d H:i:s'),
             'motif'      => 'Test',
+            'type'       => 'in_person',
         ]);
 
         $response->assertSessionHasErrors('medecin_id');
