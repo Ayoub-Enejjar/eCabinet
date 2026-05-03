@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cdn.creativefabrica.com/2021/06/12/Medical-Online-Vector-Concept-Color-Graphics-13280857-1.jpg" width="40px" hight="40px" alt="eCabinet Medical Concept">
+  <img src="https://cdn.creativefabrica.com/2021/06/12/Medical-Online-Vector-Concept-Color-Graphics-13280857-1.jpg" width="50%" hight="50%" alt="eCabinet Medical Concept">
 </p>
 
 # eCabinet
