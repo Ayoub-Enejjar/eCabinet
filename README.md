@@ -1,79 +1,83 @@
 <p align="center">
-  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/favicon.jpg" width="120" alt="eCabinet Logo">
+  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/favicon.jpg" width="80" alt="eCabinet Logo">
 </p>
 
-# eCabinet - Système de Gestion Clinique Intelligent
+# eCabinet
+### Système de Gestion Clinique Intégré
 
-<p align="center">
-  <img src="https://github.com/Ayoub-Enejjar/eCabinet/raw/main/public/images/project_preview.png" alt="eCabinet Dashboard Preview" width="100%">
-</p>
+eCabinet est une solution logicielle moderne et sécurisée conçue pour optimiser les flux de travail des cabinets médicaux. Cette plateforme unifiée permet une collaboration fluide entre les médecins, le personnel administratif et les patients, tout en garantissant la confidentialité et la précision du suivi médical.
 
-eCabinet est une application web moderne conçue pour simplifier la gestion quotidienne des cabinets médicaux. Elle offre une plateforme collaborative permettant aux médecins, secrétaires et patients de communiquer et de gérer les soins de manière efficace.
+---
 
-## 🚀 Fonctionnalités Clés
+## Fonctionnalités Principales
 
-### 👨‍⚕️ Espace Médecin
-- **Tableau de bord dynamique** : Aperçu des rendez-vous du jour et statistiques.
-- **Gestion des patients** : Accès complet aux dossiers médicaux et historique.
-- **Consultations Digitales** : Saisie des observations, diagnostics et mesures (tension, poids, etc.).
-- **Prescriptions PDF** : Génération automatique d'ordonnances professionnelles avec signature numérique.
-- **Planning Flexible** : Gestion des disponibilités et des créneaux horaires.
+### Espace Médecin
+* **Tableau de Bord Holistique** : Visualisation en temps réel du planning quotidien et des indicateurs clés.
+* **Dossier Médical Informatisé (DMI)** : Gestion structurée de l'historique patient et des antécédents.
+* **Module de Téléconsultation** : Consultations vidéo sécurisées intégrées via 8x8 JaaS.
+* **Prescriptions Numériques** : Génération d'ordonnances PDF haute qualité avec signature électronique.
 
-### 👩‍💼 Espace Secrétaire
-- **Gestion des RDV** : Confirmation, annulation et suivi des rendez-vous en temps réel.
-- **Accueil Patients** : Enregistrement et mise à jour des informations patients.
-- **Notifications** : Alertes sur les nouvelles demandes de rendez-vous.
+### Espace Secrétaire
+* **Gestion Avancée des Rendez-vous** : Flux de travail optimisé pour la confirmation et le suivi des demandes.
+* **Coordination Administrative** : Centralisation des données patients et gestion de l'accueil.
+* **Système de Notifications** : Alertes instantanées pour une réactivité maximale.
 
-### 👤 Espace Patient
-- **Prise de RDV en ligne** : Interface intuitive pour choisir son médecin et son créneau.
-- **Dossier Médical** : Consultation de l'historique et téléchargement des ordonnances.
-- **Notifications** : Suivi du statut des demandes (Confirmé / Annulé).
+### Portail Patient
+* **Réservation en Ligne** : Système de prise de rendez-vous intuitif avec choix du praticien.
+* **Accès au Suivi** : Consultation sécurisée des ordonnances et de l'historique des soins.
+* **Communication Directe** : Notifications sur le statut des consultations et rappels.
 
-### 🛡️ Administration
-- **Gestion des utilisateurs** : Contrôle total sur les comptes médecins et secrétaires.
-- **Audit et Sécurité** : Architecture robuste avec gestion fine des permissions (Middleware).
+---
 
-## 🛠️ Stack Technique
+## Spécifications Techniques
 
-- **Backend** : Laravel 12 (PHP 8.2+)
-- **Frontend** : Tailwind CSS, Blade, JavaScript (Vite)
-- **Base de données** : MySQL
-- **PDF** : DomPDF (Génération d'ordonnances)
-- **Déploiement** : Docker & Railway
+* **Architecture Backend** : Laravel 12 / PHP 8.3
+* **Interface Frontend** : Tailwind CSS & Blade (Vite)
+* **Persistance des Données** : MySQL
+* **Services Intégrés** : 
+  - **Vidéo** : 8x8 JaaS (Secure SDK)
+  - **Documents** : DomPDF (Génération PDF)
+* **Infrastructure** : Dockerized Environment / Railway Deployment
 
-## 📦 Installation Locale
+---
 
-1. **Cloner le dépôt**
+## Installation et Configuration
+
+### Prérequis
+- PHP 8.3+
+- Composer
+- Node.js & NPM
+
+### Procédure d'installation
+
+1. **Environnement**
    ```bash
    git clone https://github.com/Ayoub-Enejjar/eCabinet.git
    cd eCabinet
-   ```
-
-2. **Installer les dépendances**
-   ```bash
    composer install
    npm install
    ```
 
-3. **Configurer l'environnement**
+2. **Configuration**
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-4. **Migrations et Seeders**
+3. **Base de données**
    ```bash
    php artisan migrate --seed
    ```
 
-5. **Lancer l'application**
+4. **Exécution**
    ```bash
    npm run dev
    ```
 
-## 🌐 Déploiement
+---
 
-L'application est optimisée pour un déploiement continu sur **Railway**. Elle inclut un `Dockerfile` configuré avec les extensions PHP nécessaires (GD pour les PDF, etc.).
+## Sécurité et Conformité
+L'application utilise des standards de sécurité modernes, incluant le hachage des mots de passe (BCrypt), la protection contre les injections SQL et la gestion des permissions via des Middlewares Laravel personnalisés.
 
 ---
-*Développé avec passion pour une médecine plus connectée.*
+*Optimiser le soin par la technologie.*
