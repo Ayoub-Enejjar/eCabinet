@@ -91,7 +91,18 @@
                         </div>
                     </td>
                     <td class="px-6 py-6">
-                        <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold rounded-full uppercase tracking-tighter">{{ $rdv->motif ?? 'Généraliste' }}</span>
+                        <div class="flex flex-col gap-2 items-start">
+                            <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold rounded-full uppercase tracking-tighter">{{ $rdv->motif ?? 'Généraliste' }}</span>
+                            @if($rdv->type === 'video')
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-md flex items-center gap-1 uppercase tracking-tighter">
+                                    <span class="material-symbols-outlined text-[12px]">videocam</span> Vidéo
+                                </span>
+                            @else
+                                <span class="px-2 py-0.5 bg-gray-100 text-gray-700 text-[10px] font-bold rounded-md flex items-center gap-1 uppercase tracking-tighter">
+                                    <span class="material-symbols-outlined text-[12px]">person</span> Cabinet
+                                </span>
+                            @endif
+                        </div>
                     </td>
                     <td class="px-6 py-6">
                         @if($rdv->statut === 'CONFIRMED')
@@ -119,6 +130,12 @@
                     </td>
                     <td class="px-6 py-6 text-right">
                         <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            @if($rdv->type === 'video' && $rdv->statut === 'CONFIRMED')
+                                <a href="{{ route('teleconsultation.join', $rdv->id) }}" class="px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors inline-flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[18px]">videocam</span> Rejoindre
+                                </a>
+                            @endif
+                            
                             @if($rdv->statut !== 'CONFIRMED' )
                                 <form action="{{ route('patient.appointments.destroy', $rdv->id) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce rendez-vous ?');">
                                     @csrf

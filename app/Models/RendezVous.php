@@ -9,7 +9,7 @@ class RendezVous extends Model
     protected $table = 'rendez_vous';
     protected $fillable = [
         'date_heure', 'statut' , 'motif' ,
-        'patient_id' , 'medecin_id'
+        'patient_id' , 'medecin_id', 'type'
     ];
     protected $casts = [
         'date_heure' => 'datetime',

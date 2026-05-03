@@ -20,7 +20,6 @@
     <!-- Hidden fields for actual submission -->
     <input type="hidden" name="medecin_id" id="medecin_id" required>
     <input type="hidden" name="date_heure" id="date_heure" required>
-    <input type="hidden" name="type" value="CONSULTATION">
 
     <!-- Step 1: Doctor Selection (Bento Grid Style) -->
     <div class="lg:col-span-8 space-y-6">
@@ -55,6 +54,37 @@
         <div class="mt-6">
             <label class="font-headline text-lg font-bold block mb-2">2. Motif de consultation</label>
             <textarea name="motif" required rows="2" class="w-full bg-surface-container-lowest border border-outline-variant/30 text-sm rounded-xl p-4 focus:ring-primary focus:border-primary" placeholder="Décrivez brièvement la raison de votre visite (ex: Douleurs au dos, Renouvellement d'ordonnance...)"></textarea>
+        </div>
+
+        <div class="mt-6">
+            <label class="font-headline text-lg font-bold block mb-3">3. Type de consultation</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="group bg-surface-container-lowest p-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-pointer ring-1 ring-outline-variant/15 flex items-center gap-4 has-[:checked]:ring-primary has-[:checked]:ring-2 has-[:checked]:bg-primary-container/10">
+                    <input type="radio" name="type" value="in_person" class="text-primary focus:ring-primary w-5 h-5" checked>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <div>
+                            <p class="font-bold">En personne</p>
+                            <p class="text-xs text-on-surface-variant">Au cabinet médical</p>
+                        </div>
+                    </div>
+                </label>
+                
+                <label class="group bg-surface-container-lowest p-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-pointer ring-1 ring-outline-variant/15 flex items-center gap-4 has-[:checked]:ring-primary has-[:checked]:ring-2 has-[:checked]:bg-primary-container/10">
+                    <input type="radio" name="type" value="video" class="text-primary focus:ring-primary w-5 h-5">
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">videocam</span>
+                        </div>
+                        <div>
+                            <p class="font-bold">Appel vidéo</p>
+                            <p class="text-xs text-on-surface-variant">Téléconsultation en ligne</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
         </div>
     </div>
 

@@ -27,6 +27,7 @@ class RendezVousRequest extends FormRequest
             'date_heure'=>'required|date',
             'motif'=>'required|string' ,
             'medecin_id' => ['required',Rule::exists('users', 'id')->where('role', 'DOCTOR')],
+            'type' => ['required', 'string', Rule::in(['in_person', 'video'])],
         ];
     }
 }

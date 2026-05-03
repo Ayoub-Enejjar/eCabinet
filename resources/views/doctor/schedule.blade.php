@@ -181,7 +181,12 @@
                     {{ !in_array($rdv->statut, ['CONFIRMED','PENDING','CANCELLED']) ? 'bg-secondary-fixed text-on-secondary-fixed border-l-2 border-secondary' : '' }}
                 ">
                     <p class="truncate">{{ $rdv->patient->name ?? 'Patient' }} <span class="opacity-75 text-[10px]">({{ $rdv->date_heure->format('H:i') }})</span></p>
-                    <p class="font-normal opacity-70 truncate">{{ $rdv->motif ?? 'Consultation' }}</p>
+                    <p class="font-normal opacity-70 truncate">
+                        {{ $rdv->motif ?? 'Consultation' }}
+                        @if($rdv->type === 'video')
+                            <span class="inline-flex items-center text-blue-800" title="Appel vidéo"><span class="material-symbols-outlined text-[12px] ml-1">videocam</span></span>
+                        @endif
+                    </p>
                 </div>
                 @endif
             </div>
@@ -229,6 +234,13 @@
                         </button>
                     </form>
                     @endif
+                    
+                    @if($rdv->type === 'video' && $rdv->statut === 'CONFIRMED')
+                        <a href="{{ route('teleconsultation.join', $rdv->id) }}" class="px-3 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-lg hover:opacity-90 transition-opacity inline-flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">videocam</span> Rejoindre
+                        </a>
+                    @endif
+                    
                     <span class="px-3 py-1 rounded-full text-xs font-bold
                         {{ $rdv->statut === 'CONFIRMED' ? 'bg-teal-100 text-teal-700' : '' }}
                         {{ $rdv->statut === 'PENDING' ? 'bg-amber-100 text-amber-700' : '' }}
